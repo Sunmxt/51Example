@@ -1,0 +1,176 @@
+C51 COMPILER V9.00   UART_KEY_SCAN                                                         12/22/2016 00:58:02 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE UART_KEY_SCAN
+OBJECT MODULE PLACED IN uart_key_scan.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\Keil\C51\BIN\C51.EXE uart_key_scan.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          
+   3          typedef unsigned char uchar;
+   4          
+   5          uchar code DisplayCode[] =
+   6            {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 0x80, 0x90, 0x88, 0x83, 0xCA, 0xE1, 0x86, 0x8E};
+   7          
+   8          uchar ShowHex[4];
+   9          uchar loop_hex;
+  10          uchar last_key_code;
+  11            
+  12          void uart_interrupt() interrupt 4
+  13          {
+  14   1        if(TI == 1)
+  15   1          TI = 0;
+  16   1      }
+  17            
+  18          void init()
+  19          {
+  20   1        ShowHex[0] = 0;
+  21   1        ShowHex[1] = 0;
+  22   1        ShowHex[2] = 0;
+  23   1        ShowHex[3] = 0;
+  24   1        
+  25   1        loop_hex = 0;
+  26   1        last_key_code = 0;
+  27   1        
+  28   1        //timer
+  29   1        TMOD = 0x21;
+  30   1        
+  31   1        TH1 = 0xF4;
+  32   1        TL1 = 0xF4;
+  33   1        
+  34   1        TH0 = 0xFC;
+  35   1        TL0 = 0x67;
+  36   1        TR0 = 1;
+  37   1        TR1 = 1;
+  38   1        
+  39   1        //UART
+  40   1        SM0 = 0;
+  41   1        SM1 = 1;
+  42   1        REN = 0;
+  43   1        TI = 0;
+  44   1        
+  45   1        ES = 1;
+  46   1        EA = 1;
+  47   1      }
+  48          
+  49          void hex_display()
+  50          {
+  51   1        P2 = ~(1 << loop_hex);
+  52   1        P0 = DisplayCode[ShowHex[3 - loop_hex]];
+  53   1        
+  54   1        loop_hex++;
+  55   1        if(loop_hex > 3)
+C51 COMPILER V9.00   UART_KEY_SCAN                                                         12/22/2016 00:58:02 PAGE 2   
+
+  56   1          loop_hex = 0;
+  57   1      }
+  58          
+  59          void delay()
+  60          {
+  61   1        int i;
+  62   1        
+  63   1        for(i = 1000 ; i ; i --);
+  64   1      }
+  65          
+  66          void convert_and_set_hex(uchar Value)
+  67          {
+  68   1        int i;
+  69   1        
+  70   1        for(i = 0 ; i < 4 && Value; i++)
+  71   1        {
+  72   2          ShowHex[i] = Value % 10;
+  73   2          Value /= 10;
+  74   2        }
+  75   1        
+  76   1        for(; i < 4 ; i++)
+  77   1          ShowHex[i] = 0;
+  78   1      }
+  79          
+  80          void key_press(uchar RawKeyCode)
+  81          {
+  82   1        uchar key_code;
+  83   1        
+  84   1        key_code = ((RawKeyCode & 0xC0) >> 2) | ((RawKeyCode & 0x30) >> 4);
+  85   1        
+  86   1        convert_and_set_hex(key_code);
+  87   1        
+  88   1        SBUF = key_code;
+  89   1      }
+  90          
+  91          
+  92          
+  93          void key_scan()
+  94          {
+  95   1        uchar key_code;
+  96   1        
+  97   1        P1 = 0xBF;
+  98   1        key_code = P1;
+  99   1        if(key_code != 0xBF)
+ 100   1        {
+ 101   2          delay();
+ 102   2          key_code = P1;
+ 103   2          if(key_code != 0xBF && last_key_code != key_code)
+ 104   2          {
+ 105   3            key_press(key_code);
+ 106   3            last_key_code = key_code;
+ 107   3          }
+ 108   2          
+ 109   2          P1 = 0xFF;
+ 110   2          return;
+ 111   2        }
+ 112   1        
+ 113   1        
+ 114   1        P1 = 0x7F;
+ 115   1        key_code = P1;
+ 116   1        if(key_code != 0x7F)
+ 117   1        {
+C51 COMPILER V9.00   UART_KEY_SCAN                                                         12/22/2016 00:58:02 PAGE 3   
+
+ 118   2          delay();
+ 119   2          key_code = P1;
+ 120   2          if(key_code != 0x7F && last_key_code != key_code)
+ 121   2          {
+ 122   3            key_press(key_code);
+ 123   3            last_key_code = key_code;
+ 124   3          }
+ 125   2          
+ 126   2          P1 = 0xFF;
+ 127   2          return;
+ 128   2        }
+ 129   1        
+ 130   1        last_key_code = 0;
+ 131   1      }
+ 132          
+ 133          void main()
+ 134          {
+ 135   1        init();
+ 136   1        
+ 137   1        for(;;)
+ 138   1        {
+ 139   2            if(TF0)
+ 140   2            {
+ 141   3              TF0 = 0;
+ 142   3              TH0 = 0xFC;
+ 143   3              TL0 = 0x67;
+ 144   3              
+ 145   3              key_scan();
+ 146   3              hex_display();
+ 147   3            }
+ 148   2        }
+ 149   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    286    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

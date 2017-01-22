@@ -1,0 +1,171 @@
+C51 COMPILER V9.00   PCF8591_PHOTO                                                         01/22/2017 15:19:35 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE PCF8591_PHOTO
+OBJECT MODULE PLACED IN pcf8591_photo.OBJ
+COMPILER INVOKED BY: E:\Program Files (x86)\Keil\C51\BIN\C51.EXE pcf8591_photo.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include "pcf8591.h"
+   4          
+   5          #define HIGH_VOLTAGE_REFERENCE 5
+   6          #define LOW_VOLTAGE_REGERENCE 0
+   7          
+   8          #define PCF8591_ADDRESS 0x48
+   9          
+  10          typedef unsigned int uint;
+  11          typedef unsigned char uint8;
+  12          typedef unsigned int uint16;
+  13          
+  14          uchar code DisplayCode[] =
+  15                  {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 
+  16              0x80, 0x90, 0x88, 0x83, 0xCA, 0xE1, 0x86, 0x8E};
+  17          
+  18          bit update;
+  19          uchar DigitalDot[4];
+  20          uchar Digital[4];
+  21          uchar Counter;
+  22          
+  23          sbit SCL = P1^0;
+  24          sbit SDA = P1^1;
+  25          sbit LED7 = P1^7;
+  26          sbit LED6 = P1^6;
+  27          sbit LED5 = P1^5;
+  28          
+  29          void scl_write(uchar value)
+  30          {SCL = value;}
+  31          
+  32          void sda_write(uchar value)
+  33          {SDA = value;}
+  34          
+  35          bit sda_read()
+  36          {return SDA;}
+  37          
+  38          void init()
+  39          {
+  40   1          Counter = 0;
+  41   1          
+  42   1          Digital[0] = 0;
+  43   1          Digital[1] = 0;
+  44   1          Digital[2] = 0;
+  45   1          Digital[3] = 0;
+  46   1          DigitalDot[0] = 0;
+  47   1          DigitalDot[1] = 0;
+  48   1          DigitalDot[2] = 0;
+  49   1          DigitalDot[3] = 0;
+  50   1          
+  51   1          TMOD = 0x10;
+  52   1          TH0 = 0xFC;
+  53   1          TL0 = 0x67;
+  54   1          TF0 = 0;
+  55   1          TR0 = 1;
+C51 COMPILER V9.00   PCF8591_PHOTO                                                         01/22/2017 15:19:35 PAGE 2   
+
+  56   1          
+  57   1          EA = 1;
+  58   1          ET0 = 1;
+  59   1          
+  60   1          PCF8591OpenWrite(PCF8591_ADDRESS, scl_write, sda_write, sda_read);
+  61   1          PCF8591Send(PCF8591_MAKE_CONTROL_BYTE(0, 0, 0, 0), scl_write, sda_write, sda_read);
+  62   1          PCF8591Close(scl_write, sda_write);
+  63   1      }
+  64          
+  65          void timer0_interrupt() interrupt 1
+  66          {   
+  67   1          TH0 = 0xFC;
+  68   1          TL0 = 0x67;
+  69   1          
+  70   1          //Digital Display
+  71   1          P2 = ~((uchar)1 << (3 - ((Counter >> 2) & 3)));
+  72   1          P0 = DisplayCode[Digital[(Counter >> 2) & 3]] ^ (DigitalDot[(Counter >> 2) & 3] << 7);
+  73   1          
+  74   1          Counter ++;
+  75   1          
+  76   1          if(Counter >= 40)
+  77   1          {
+  78   2              update = 1;
+  79   2              Counter = 0;
+  80   2          }
+  81   1      }
+  82              
+  83          void main()
+  84          {
+  85   1           union {
+  86   1              float volt;
+  87   1              long li;
+  88   1          }u2;
+  89   1          
+  90   1          union {
+  91   1              uchar ad_data;
+  92   1              char power;
+  93   1          }u1;
+  94   1          
+  95   1          init();
+  96   1          
+  97   1          while(1)
+  98   1          {
+  99   2              _nop_();
+ 100   2              if(update)
+ 101   2              {
+ 102   3                  update = 0;
+ 103   3                  if(PCF8591OpenRead(PCF8591_ADDRESS, scl_write, sda_write, sda_read))
+ 104   3                      LED7 = 0;
+ 105   3                  
+ 106   3                  u1.ad_data = PCF8591Receive(scl_write ,sda_write, sda_read);
+ 107   3                  PCF8591Close(scl_write, sda_write);
+ 108   3              
+ 109   3                  u2.volt = LOW_VOLTAGE_REGERENCE 
+ 110   3                          + ((float)HIGH_VOLTAGE_REFERENCE - LOW_VOLTAGE_REGERENCE) / 255 * u1.ad_data;
+ 111   3              
+ 112   3                  u1.power = 0;
+ 113   3                  while(u2.volt - (long)u2.volt)
+ 114   3                  {
+ 115   4                      u2.volt *= 10;
+ 116   4                      u1.power++;
+ 117   4                  }
+C51 COMPILER V9.00   PCF8591_PHOTO                                                         01/22/2017 15:19:35 PAGE 3   
+
+ 118   3              
+ 119   3                  u2.li = u2.volt;
+ 120   3                  while(u2.li > 9999)
+ 121   3                  {
+ 122   4                      u2.li /= 10;
+ 123   4                      u1.power--;
+ 124   4                  }
+ 125   3              
+ 126   3                  DigitalDot[0] = 0;
+ 127   3                  DigitalDot[1] = 0;
+ 128   3                  DigitalDot[2] = 0;
+ 129   3                  DigitalDot[3] = 0;
+ 130   3              
+ 131   3                  if(u1.power <= 3) 
+ 132   3                      DigitalDot[u1.power] = 1;
+ 133   3              
+ 134   3                  Digital[0] = u2.li % 10;
+ 135   3                  u2.li /= 10;
+ 136   3                  Digital[1] = u2.li % 10;
+ 137   3                  u2.li /= 10;
+ 138   3                  Digital[2] = u2.li % 10;
+ 139   3                  u2.li /= 10;
+ 140   3                  Digital[3] = u2.li % 10;
+ 141   3              }
+ 142   2          }
+ 143   1      }
+ 144          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    683    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

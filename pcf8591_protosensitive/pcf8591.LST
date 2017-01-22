@@ -1,0 +1,83 @@
+C51 COMPILER V9.00   PCF8591                                                               01/22/2017 15:19:36 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE PCF8591
+OBJECT MODULE PLACED IN pcf8591.OBJ
+COMPILER INVOKED BY: E:\Program Files (x86)\Keil\C51\BIN\C51.EXE pcf8591.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*
+   2              Basic implement for PCF8591 interfaces.
+   3          */
+   4          
+   5          #include "pcf8591.h"
+   6          
+   7          
+   8          uchar PCF8591OpenWrite(uchar Address, SCLControlFunction SCLSet
+   9                                  , SDAControlFunction SDASet
+  10                                  , SDAReadFunction SDARead)
+  11          {
+  12   1          uchar result;
+  13   1          
+  14   1          I2CStart(SCLSet, SDASet);
+  15   1          result = I2CSendAddress(Address, 0, SCLSet, SDASet, SDARead);
+  16   1          
+  17   1          if(!result)
+  18   1              I2CStop(SCLSet, SDASet);
+  19   1          return result;
+  20   1      }
+  21          
+  22                              
+  23          uchar PCF8591Send(uchar Data, SCLControlFunction SCLSet, SDAControlFunction SDASet
+  24                                          , SDAReadFunction SDARead)
+  25          {
+  26   1          return I2CWrite(Data, SCLSet, SDASet, SDARead);
+  27   1      }
+  28          
+  29          uchar PCF8591OpenRead(uchar Address, SCLControlFunction SCLSet
+  30                                  , SDAControlFunction SDASet
+  31                                  , SDAReadFunction SDARead)
+  32          {
+  33   1          uchar result;
+  34   1          
+  35   1          I2CStart(SCLSet, SDASet);
+  36   1          result = I2CSendAddress(Address, 1, SCLSet, SDASet, SDARead);
+  37   1          
+  38   1          if(!result)
+  39   1              I2CStop(SCLSet, SDASet);
+  40   1          
+  41   1          return result;
+  42   1      }
+  43          
+  44          uchar PCF8591Receive(SCLControlFunction SCLSet, SDAControlFunction SDASet, SDAReadFunction SDARead)
+  45          {
+  46   1          return I2CRead(SCLSet, SDASet, SDARead);
+  47   1      }
+  48          
+  49          void PCF8591ReceiveContinue(SCLControlFunction SCLSet ,SDAControlFunction SDASet)
+  50          {
+  51   1          I2CSendReadContinueSignal(SCLSet, SDASet);
+  52   1      }
+  53          
+  54          void PCF8591Close(SCLControlFunction SCLSet, SDAControlFunction SDASet)
+  55          {
+C51 COMPILER V9.00   PCF8591                                                               01/22/2017 15:19:36 PAGE 2   
+
+  56   1          I2CStop(SCLSet, SDASet);
+  57   1      }
+  58          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    233    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      53
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

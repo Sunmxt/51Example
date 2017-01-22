@@ -1,0 +1,257 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/22/2016  00:58:03  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\PROGRAM FILES (X86)\KEIL\C51\BIN\BL51.EXE uart_key_scan.obj TO uart_key_scan
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  uart_key_scan.obj (UART_KEY_SCAN)
+  D:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  uart_key_scan (UART_KEY_SCAN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         ?DT?UART_KEY_SCAN
+            IDATA   000EH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0017H     UNIT         ?PR?_KEY_PRESS?UART_KEY_SCAN
+            CODE    001AH     0006H     UNIT         ?PR?UART_INTERRUPT?UART_KEY_SCAN
+                    0020H     0003H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     004AH     UNIT         ?PR?KEY_SCAN?UART_KEY_SCAN
+            CODE    0070H     003AH     UNIT         ?PR?_CONVERT_AND_SET_HEX?UART_KEY_SCAN
+            CODE    00AAH     002DH     UNIT         ?PR?INIT?UART_KEY_SCAN
+            CODE    00D7H     002CH     UNIT         ?PR?HEX_DISPLAY?UART_KEY_SCAN
+            CODE    0103H     0016H     UNIT         ?PR?MAIN?UART_KEY_SCAN
+            CODE    0119H     0010H     UNIT         ?CO?UART_KEY_SCAN
+            CODE    0129H     000EH     UNIT         ?PR?DELAY?UART_KEY_SCAN
+            CODE    0137H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   uart_key_scan (UART_KEY_SCAN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?UART_KEY_SCAN
+
+?PR?MAIN?UART_KEY_SCAN
+  +--> ?PR?INIT?UART_KEY_SCAN
+  +--> ?PR?KEY_SCAN?UART_KEY_SCAN
+  +--> ?PR?HEX_DISPLAY?UART_KEY_SCAN
+
+?PR?KEY_SCAN?UART_KEY_SCAN
+  +--> ?PR?DELAY?UART_KEY_SCAN
+  +--> ?PR?_KEY_PRESS?UART_KEY_SCAN
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/22/2016  00:58:03  PAGE 2
+
+
+?PR?_KEY_PRESS?UART_KEY_SCAN
+  +--> ?PR?_CONVERT_AND_SET_HEX?UART_KEY_SCAN
+
+?PR?HEX_DISPLAY?UART_KEY_SCAN
+  +--> ?CO?UART_KEY_SCAN
+
+
+
+SYMBOL TABLE OF MODULE:  uart_key_scan (UART_KEY_SCAN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        UART_KEY_SCAN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:0129H         PUBLIC        delay
+  C:001AH         PUBLIC        uart_interrupt
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.1       PUBLIC        TI
+  C:00D7H         PUBLIC        hex_display
+  C:0103H         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:00AAH         PUBLIC        init
+  D:0008H         PUBLIC        ShowHex
+  B:0088H.5       PUBLIC        TF0
+  D:008CH         PUBLIC        TH0
+  D:008DH         PUBLIC        TH1
+  B:0098H.7       PUBLIC        SM0
+  D:008AH         PUBLIC        TL0
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  C:0026H         PUBLIC        key_scan
+  B:0088H.4       PUBLIC        TR0
+  B:0088H.6       PUBLIC        TR1
+  C:0119H         PUBLIC        DisplayCode
+  C:0003H         PUBLIC        _key_press
+  D:000CH         PUBLIC        last_key_code
+  D:000DH         PUBLIC        loop_hex
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  C:0070H         PUBLIC        _convert_and_set_hex
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          UART_INTERRUPT
+  C:001AH         LINE#         12
+  C:001AH         LINE#         14
+  C:001DH         LINE#         15
+  C:001FH         LINE#         16
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/22/2016  00:58:03  PAGE 3
+
+
+  -------         ENDPROC       UART_INTERRUPT
+  -------         PROC          INIT
+  C:00AAH         LINE#         18
+  C:00AAH         LINE#         19
+  C:00AAH         LINE#         20
+  C:00ADH         LINE#         21
+  C:00AFH         LINE#         22
+  C:00B1H         LINE#         23
+  C:00B3H         LINE#         25
+  C:00B5H         LINE#         26
+  C:00B7H         LINE#         29
+  C:00BAH         LINE#         31
+  C:00BDH         LINE#         32
+  C:00C0H         LINE#         34
+  C:00C3H         LINE#         35
+  C:00C6H         LINE#         36
+  C:00C8H         LINE#         37
+  C:00CAH         LINE#         40
+  C:00CCH         LINE#         41
+  C:00CEH         LINE#         42
+  C:00D0H         LINE#         43
+  C:00D2H         LINE#         45
+  C:00D4H         LINE#         46
+  C:00D6H         LINE#         47
+  -------         ENDPROC       INIT
+  -------         PROC          HEX_DISPLAY
+  C:00D7H         LINE#         49
+  C:00D7H         LINE#         50
+  C:00D7H         LINE#         51
+  C:00E7H         LINE#         52
+  C:00F6H         LINE#         54
+  C:00F8H         LINE#         55
+  C:00FFH         LINE#         56
+  C:0102H         LINE#         57
+  -------         ENDPROC       HEX_DISPLAY
+  -------         PROC          DELAY
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0129H         LINE#         59
+  C:0129H         LINE#         60
+  C:0129H         LINE#         63
+  C:0136H         LINE#         64
+  -------         ENDPROC       DELAY
+  -------         PROC          _CONVERT_AND_SET_HEX
+  D:0007H         SYMBOL        Value
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:0070H         LINE#         66
+  C:0070H         LINE#         67
+  C:0070H         LINE#         70
+  C:0076H         LINE#         71
+  C:0076H         LINE#         72
+  C:0080H         LINE#         73
+  C:0086H         LINE#         74
+  C:0091H         LINE#         76
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/22/2016  00:58:03  PAGE 4
+
+
+  C:009CH         LINE#         77
+  C:00A9H         LINE#         78
+  -------         ENDPROC       _CONVERT_AND_SET_HEX
+  -------         PROC          _KEY_PRESS
+  D:0007H         SYMBOL        RawKeyCode
+  -------         DO            
+  D:0006H         SYMBOL        key_code
+  -------         ENDDO         
+  C:0003H         LINE#         80
+  C:0003H         LINE#         81
+  C:0003H         LINE#         84
+  C:0013H         LINE#         86
+  C:0017H         LINE#         88
+  C:0019H         LINE#         89
+  -------         ENDPROC       _KEY_PRESS
+  -------         PROC          KEY_SCAN
+  -------         DO            
+  D:0003H         SYMBOL        key_code
+  -------         ENDDO         
+  C:0026H         LINE#         93
+  C:0026H         LINE#         94
+  C:0026H         LINE#         97
+  C:0029H         LINE#         98
+  C:002BH         LINE#         99
+  C:0030H         LINE#         100
+  C:0030H         LINE#         101
+  C:0033H         LINE#         102
+  C:0035H         LINE#         103
+  C:003FH         LINE#         104
+  C:003FH         LINE#         105
+  C:0044H         LINE#         106
+  C:0046H         LINE#         107
+  C:0046H         LINE#         109
+  C:0048H         LINE#         111
+  C:0048H         LINE#         114
+  C:004BH         LINE#         115
+  C:004DH         LINE#         116
+  C:0052H         LINE#         117
+  C:0052H         LINE#         118
+  C:0055H         LINE#         119
+  C:0057H         LINE#         120
+  C:0061H         LINE#         121
+  C:0061H         LINE#         122
+  C:0066H         LINE#         123
+  C:0068H         LINE#         124
+  C:0068H         LINE#         126
+  C:006CH         LINE#         128
+  C:006CH         LINE#         130
+  C:006FH         LINE#         131
+  -------         ENDPROC       KEY_SCAN
+  -------         PROC          MAIN
+  C:0103H         LINE#         133
+  C:0103H         LINE#         134
+  C:0103H         LINE#         135
+  C:0106H         LINE#         137
+  C:0106H         LINE#         138
+  C:0106H         LINE#         139
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/22/2016  00:58:03  PAGE 5
+
+
+  C:0109H         LINE#         140
+  C:0109H         LINE#         141
+  C:010BH         LINE#         142
+  C:010EH         LINE#         143
+  C:0111H         LINE#         145
+  C:0114H         LINE#         146
+  C:0117H         LINE#         147
+  C:0117H         LINE#         148
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        UART_KEY_SCAN
+
+Program Size: data=15.0 xdata=0 code=320
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

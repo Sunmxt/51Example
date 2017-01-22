@@ -1,0 +1,127 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/24/2016  22:49:09  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\PROGRAM FILES (X86)\KEIL\C51\BIN\BL51.EXE flash.obj TO led_flash_with_timer
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  flash.obj (FLASH)
+  D:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  led_flash_with_timer (FLASH)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         ?DT?FLASH
+            IDATA   000CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0006H     UNIT         ?PR?MAIN?FLASH
+                    0009H     0002H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     0026H     UNIT         ?PR?TIMER0_INTERRUPT?FLASH
+            CODE    0034H     001DH     UNIT         ?PR?TIMER_INIT?FLASH
+            CODE    0051H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   led_flash_with_timer (FLASH)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?FLASH
+
+?PR?MAIN?FLASH
+  +--> ?PR?TIMER_INIT?FLASH
+
+
+
+SYMBOL TABLE OF MODULE:  led_flash_with_timer (FLASH)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        FLASH
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/24/2016  22:49:09  PAGE 2
+
+
+  D:00A8H         PUBLIC        IE
+  D:0008H         PUBLIC        flash
+  D:00B8H         PUBLIC        IP
+  C:0003H         PUBLIC        main
+  C:000EH         PUBLIC        timer0_interrupt
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:0034H         PUBLIC        timer_init
+  D:0009H         PUBLIC        counter_ms
+  B:00A8H.1       PUBLIC        ET0
+  D:000BH         PUBLIC        quarter_ms
+  B:0088H.5       PUBLIC        TF0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          TIMER0_INTERRUPT
+  -------         DO            
+  D:0006H         SYMBOL        excess
+  -------         ENDDO         
+  C:000EH         LINE#         9
+  C:0012H         LINE#         22
+  C:0012H         LINE#         30
+  C:001AH         LINE#         31
+  C:0023H         LINE#         32
+  C:0023H         LINE#         33
+  C:0029H         LINE#         34
+  C:002CH         LINE#         35
+  C:002FH         LINE#         36
+  C:002FH         LINE#         38
+  -------         ENDPROC       TIMER0_INTERRUPT
+  -------         PROC          TIMER_INIT
+  C:0034H         LINE#         40
+  C:0034H         LINE#         41
+  C:0034H         LINE#         42
+  C:0037H         LINE#         43
+  C:003BH         LINE#         44
+  C:003DH         LINE#         45
+  C:003FH         LINE#         56
+  C:0042H         LINE#         57
+  C:0045H         LINE#         58
+  C:0048H         LINE#         66
+  C:004AH         LINE#         67
+  C:004CH         LINE#         69
+  C:004EH         LINE#         70
+  C:0050H         LINE#         71
+  -------         ENDPROC       TIMER_INIT
+  -------         PROC          MAIN
+  C:0003H         LINE#         73
+  C:0003H         LINE#         74
+  C:0003H         LINE#         75
+  C:0006H         LINE#         76
+  C:0006H         LINE#         77
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        FLASH
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/24/2016  22:49:09  PAGE 3
+
+
+
+Program Size: data=13.0 xdata=0 code=91
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

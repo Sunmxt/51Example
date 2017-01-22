@@ -1,0 +1,143 @@
+C51 COMPILER V9.00   TIMER_INTERRUPT                                                       12/14/2016 23:52:19 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE TIMER_INTERRUPT
+OBJECT MODULE PLACED IN timer_interrupt.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\Keil\C51\BIN\C51.EXE timer_interrupt.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          
+   5          typedef unsigned char uchar;
+   6          
+   7          uchar code DisplayCode[] =
+   8            {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 0x80, 0x90, 0x88, 0x83, 0xCA, 0xE1, 0x86, 0x8E};
+   9          
+  10          unsigned int counter_ms_led;
+  11          unsigned int counter_ms_digital;
+  12          unsigned char display_counter;
+  13          uchar digital[2]; 
+  14          uchar led_out;
+  15          unsigned char running;
+  16            
+  17          void digital_increase()
+  18          {
+  19   1        if(digital[0] < 9)
+  20   1        {
+  21   2          digital[0]++;
+  22   2          return;
+  23   2        }
+  24   1        
+  25   1        digital[0] = 0;
+  26   1        
+  27   1        if(digital[1] < 5)
+  28   1        {
+  29   2          digital[1]++;
+  30   2          return;
+  31   2        }
+  32   1        
+  33   1        digital[1] = 0;
+  34   1      }
+  35          
+  36          void extern_interrupt0() interrupt 0
+  37          {
+  38   1        running ^= 1;
+  39   1      }
+  40          
+  41          void timer0_callback() interrupt 1
+  42          {
+  43   1        TH0 = 0xFC;
+  44   1        TL0 = 0x67;
+  45   1        
+  46   1        if(running)
+  47   1        {
+  48   2          counter_ms_digital ++;
+  49   2          if(counter_ms_digital >= 1000)
+  50   2          {
+  51   3            digital_increase();
+  52   3            counter_ms_digital = 0;
+  53   3          }
+  54   2        }
+  55   1        
+C51 COMPILER V9.00   TIMER_INTERRUPT                                                       12/14/2016 23:52:19 PAGE 2   
+
+  56   1        display_counter ++;
+  57   1        if(display_counter & 1)
+  58   1        {
+  59   2          P2 = 0xF7;
+  60   2          P0 = DisplayCode[digital[0]];
+  61   2        }
+  62   1        else
+  63   1        {
+  64   2          P2 = 0xFB;
+  65   2          P0 = DisplayCode[digital[1]];
+  66   2        }
+  67   1      }
+  68          
+  69          void timer1_callback() interrupt 3
+  70          {
+  71   1        TH1 = 0xFC;
+  72   1        TL1 = 0x67;
+  73   1        
+  74   1        counter_ms_led ++;
+  75   1        if(counter_ms_led >= 500)
+  76   1        {
+  77   2          led_out = _crol_(led_out, 1);
+  78   2          P1 = led_out;
+  79   2          counter_ms_led = 0;
+  80   2        }
+  81   1      }
+  82          
+  83          void main()
+  84          {
+  85   1        TMOD = 0x11;
+  86   1        
+  87   1        //timer 0
+  88   1        TH0 = 0xFC;
+  89   1        TL0 = 0x67;
+  90   1        TF0 = 0;
+  91   1        TR0 = 1;
+  92   1      
+  93   1        //timer 1
+  94   1        TH1 = 0xFC;
+  95   1        TL1 = 0x67;
+  96   1        TF1 = 0;
+  97   1        TR1 = 1;
+  98   1        
+  99   1        ET1 = 1;
+ 100   1        ET0 = 1;
+ 101   1        
+ 102   1        IT0 = 1;
+ 103   1        EX0 = 1;
+ 104   1        EA = 1;
+ 105   1        
+ 106   1        led_out = 0xFE;
+ 107   1        P1 = led_out;
+ 108   1        counter_ms_led = 0;
+ 109   1        counter_ms_digital = 0;
+ 110   1        display_counter = 0;
+ 111   1        running = 1;
+ 112   1        digital[0] = 0;
+ 113   1        digital[1] = 0;
+ 114   1        
+ 115   1        while(1) _nop_();
+ 116   1      }
+
+C51 COMPILER V9.00   TIMER_INTERRUPT                                                       12/14/2016 23:52:19 PAGE 3   
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    233    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

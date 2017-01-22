@@ -1,0 +1,573 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        01/22/2017  15:19:36  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+E:\PROGRAM FILES (X86)\KEIL\C51\BIN\BL51.EXE pcf8591_photo.obj, i2c.obj, pcf8591.obj TO pcf8591_photo
+
+
+MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
+
+
+INPUT MODULES INCLUDED:
+  pcf8591_photo.obj (PCF8591_PHOTO)
+  i2c.obj (I2C)
+  pcf8591.obj (PCF8591)
+  E:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51FPS.LIB (?C?FPADD)
+  E:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51FPS.LIB (?C?FPMUL)
+  E:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51FPS.LIB (?C?FCAST)
+  E:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51FPS.LIB (?C?CASTF)
+  E:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51FPS.LIB (?C?FPGETOPN)
+  E:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  E:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C?SLDIV)
+  E:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C?LNEG)
+  E:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C?SLCMP)
+  E:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C?ICALL)
+  E:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C?ULDIV)
+
+
+LINK MAP OF MODULE:  pcf8591_photo (PCF8591_PHOTO)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0009H     UNIT         ?DT?PCF8591_PHOTO
+            DATA    0011H     0006H     UNIT         ?DT?_I2CSENDREADCONTINUESIGNAL?I2C
+            DATA    0017H     0006H     UNIT         ?DT?_PCF8591RECEIVECONTINUE?PCF8591
+                    001DH     0003H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         ?BI?PCF8591_PHOTO
+            BIT     0020H.1   0000H.1   UNIT         _BIT_GROUP_
+                    0020H.2   0000H.6                *** GAP ***
+            DATA    0021H     0025H     UNIT         _DATA_GROUP_
+            IDATA   0046H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0006H     UNIT         ?PR?_SCL_WRITE?PCF8591_PHOTO
+                    0009H     0002H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     03B5H     UNIT         ?C?LIB_CODE
+            CODE    03C3H     01BDH     UNIT         ?PR?MAIN?PCF8591_PHOTO
+            CODE    0580H     0073H     UNIT         ?PR?_I2CWRITE?I2C
+            CODE    05F3H     0070H     UNIT         ?PR?INIT?PCF8591_PHOTO
+            CODE    0663H     006FH     UNIT         ?PR?TIMER0_INTERRUPT?PCF8591_PHOTO
+            CODE    06D2H     006CH     UNIT         ?PR?_I2CREAD?I2C
+            CODE    073EH     0051H     UNIT         ?PR?_PCF8591OPENWRITE?PCF8591
+            CODE    078FH     0051H     UNIT         ?PR?_PCF8591OPENREAD?PCF8591
+            CODE    07E0H     0044H     UNIT         ?C?LDIV
+            CODE    0824H     0033H     UNIT         ?PR?_I2CSTART?I2C
+            CODE    0857H     002EH     UNIT         ?PR?_I2CSTOP?I2C
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/22/2017  15:19:36  PAGE 2
+
+
+            CODE    0885H     0026H     UNIT         ?PR?_I2CSENDADDRESS?I2C
+            CODE    08ABH     0020H     UNIT         ?PR?_I2CSENDREADCONTINUESIGNAL?I2C
+            CODE    08CBH     0019H     UNIT         ?PR?_PCF8591SEND?PCF8591
+            CODE    08E4H     0016H     UNIT         ?PR?_PCF8591RECEIVE?PCF8591
+            CODE    08FAH     0010H     UNIT         ?CO?PCF8591_PHOTO
+            CODE    090AH     000CH     UNIT         ?PR?_PCF8591RECEIVECONTINUE?PCF8591
+            CODE    0916H     000CH     UNIT         ?PR?_PCF8591CLOSE?PCF8591
+            CODE    0922H     000CH     UNIT         ?C_C51STARTUP
+            CODE    092EH     000BH     UNIT         ?PR?I2C_DELAY_5US?I2C
+            CODE    0939H     0006H     UNIT         ?PR?_SDA_WRITE?PCF8591_PHOTO
+            CODE    093FH     0005H     UNIT         ?PR?_I2CTESTACKNOWLEDGE?I2C
+            CODE    0944H     0003H     UNIT         ?PR?SDA_READ?PCF8591_PHOTO
+
+
+
+OVERLAY MAP OF MODULE:   pcf8591_photo (PCF8591_PHOTO)
+
+
+SEGMENT                                        BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT                       START    LENGTH     START    LENGTH
+-------------------------------------------------------------------------------
+?PR?TIMER0_INTERRUPT?PCF8591_PHOTO          -----    -----      -----    -----
+  +--> ?CO?PCF8591_PHOTO
+
+*** NEW ROOT ***************************************************
+
+?C_C51STARTUP                               -----    -----      -----    -----
+  +--> ?PR?MAIN?PCF8591_PHOTO
+
+?PR?MAIN?PCF8591_PHOTO                      -----    -----      0021H    0005H
+  +--> ?PR?INIT?PCF8591_PHOTO
+  +--> ?PR?_SDA_WRITE?PCF8591_PHOTO
+  +--> ?PR?SDA_READ?PCF8591_PHOTO
+  +--> ?PR?_SCL_WRITE?PCF8591_PHOTO
+  +--> ?PR?_PCF8591OPENREAD?PCF8591
+  +--> ?PR?_PCF8591RECEIVE?PCF8591
+  +--> ?PR?_PCF8591CLOSE?PCF8591
+
+?PR?INIT?PCF8591_PHOTO                      -----    -----      -----    -----
+  +--> ?PR?_SDA_WRITE?PCF8591_PHOTO
+  +--> ?PR?SDA_READ?PCF8591_PHOTO
+  +--> ?PR?_SCL_WRITE?PCF8591_PHOTO
+  +--> ?PR?_PCF8591OPENWRITE?PCF8591
+  +--> ?PR?_PCF8591SEND?PCF8591
+  +--> ?PR?_PCF8591CLOSE?PCF8591
+
+?PR?_PCF8591OPENWRITE?PCF8591               -----    -----      0026H    000BH
+  +--> ?PR?_I2CSTART?I2C
+  +--> ?PR?_I2CSENDADDRESS?I2C
+  +--> ?PR?_I2CSTOP?I2C
+
+?PR?_I2CSTART?I2C                           -----    -----      0031H    0006H
+  +--> ?PR?I2C_DELAY_5US?I2C
+
+?PR?_I2CSENDADDRESS?I2C                     0020H.1  0000H.1    0031H    000AH
+  +--> ?PR?_I2CWRITE?I2C
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/22/2017  15:19:36  PAGE 3
+
+
+?PR?_I2CWRITE?I2C                           -----    -----      003BH    000BH
+  +--> ?PR?I2C_DELAY_5US?I2C
+  +--> ?PR?_I2CTESTACKNOWLEDGE?I2C
+
+?PR?_I2CSTOP?I2C                            -----    -----      0031H    0006H
+  +--> ?PR?I2C_DELAY_5US?I2C
+
+?PR?_PCF8591SEND?PCF8591                    -----    -----      0026H    000AH
+  +--> ?PR?_I2CWRITE?I2C
+
+?PR?_PCF8591CLOSE?PCF8591                   -----    -----      0026H    0006H
+  +--> ?PR?_I2CSTOP?I2C
+
+?PR?_PCF8591OPENREAD?PCF8591                -----    -----      0026H    000BH
+  +--> ?PR?_I2CSTART?I2C
+  +--> ?PR?_I2CSENDADDRESS?I2C
+  +--> ?PR?_I2CSTOP?I2C
+
+?PR?_PCF8591RECEIVE?PCF8591                 -----    -----      0026H    0009H
+  +--> ?PR?_I2CREAD?I2C
+
+?PR?_I2CREAD?I2C                            -----    -----      002FH    000BH
+  +--> ?PR?I2C_DELAY_5US?I2C
+
+
+
+SYMBOL TABLE OF MODULE:  pcf8591_photo (PCF8591_PHOTO)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        PCF8591_PHOTO
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  B:0020H.0       PUBLIC        update
+  B:0090H.7       PUBLIC        LED7
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:03C3H         PUBLIC        main
+  C:0663H         PUBLIC        timer0_interrupt
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:05F3H         PUBLIC        init
+  C:0944H         PUBLIC        sda_read
+  D:0008H         PUBLIC        Digital
+  C:0939H         PUBLIC        _sda_write
+  B:00A8H.1       PUBLIC        ET0
+  B:0088H.5       PUBLIC        TF0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  C:0003H         PUBLIC        _scl_write
+  B:0088H.4       PUBLIC        TR0
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/22/2017  15:19:36  PAGE 4
+
+
+  B:0090H.1       PUBLIC        SDA
+  C:08FAH         PUBLIC        DisplayCode
+  B:0090H.0       PUBLIC        SCL
+  D:000CH         PUBLIC        Counter
+  D:00C8H         PUBLIC        T2CON
+  D:000DH         PUBLIC        DigitalDot
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _SCL_WRITE
+  D:0007H         SYMBOL        value
+  C:0003H         LINE#         29
+  C:0003H         LINE#         30
+  -------         ENDPROC       _SCL_WRITE
+  -------         PROC          _SDA_WRITE
+  D:0007H         SYMBOL        value
+  C:0939H         LINE#         32
+  C:0939H         LINE#         33
+  -------         ENDPROC       _SDA_WRITE
+  -------         PROC          SDA_READ
+  C:0944H         LINE#         35
+  C:0944H         LINE#         36
+  -------         ENDPROC       SDA_READ
+  -------         PROC          INIT
+  C:05F3H         LINE#         38
+  C:05F3H         LINE#         39
+  C:05F3H         LINE#         40
+  C:05F6H         LINE#         42
+  C:05F8H         LINE#         43
+  C:05FAH         LINE#         44
+  C:05FCH         LINE#         45
+  C:05FEH         LINE#         46
+  C:0600H         LINE#         47
+  C:0602H         LINE#         48
+  C:0604H         LINE#         49
+  C:0606H         LINE#         51
+  C:0609H         LINE#         52
+  C:060CH         LINE#         53
+  C:060FH         LINE#         54
+  C:0611H         LINE#         55
+  C:0613H         LINE#         57
+  C:0615H         LINE#         58
+  C:0617H         LINE#         60
+  C:0634H         LINE#         61
+  C:0651H         LINE#         62
+  -------         ENDPROC       INIT
+  -------         PROC          TIMER0_INTERRUPT
+  C:0663H         LINE#         65
+  C:0676H         LINE#         67
+  C:0679H         LINE#         68
+  C:067CH         LINE#         71
+  C:0699H         LINE#         72
+  C:06B3H         LINE#         74
+  C:06B5H         LINE#         76
+  C:06BCH         LINE#         77
+  C:06BCH         LINE#         78
+  C:06BEH         LINE#         79
+  C:06C1H         LINE#         80
+  C:06C1H         LINE#         81
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/22/2017  15:19:36  PAGE 5
+
+
+  -------         ENDPROC       TIMER0_INTERRUPT
+  -------         PROC          MAIN
+  -------         DO            
+  D:0021H         SYMBOL        u2
+  D:0025H         SYMBOL        u1
+  -------         ENDDO         
+  C:03C3H         LINE#         83
+  C:03C3H         LINE#         84
+  C:03C3H         LINE#         95
+  C:03C6H         LINE#         97
+  C:03C6H         LINE#         98
+  C:03C6H         LINE#         99
+  C:03C7H         LINE#         100
+  C:03CAH         LINE#         101
+  C:03CAH         LINE#         102
+  C:03CCH         LINE#         103
+  C:03ECH         LINE#         104
+  C:03EEH         LINE#         106
+  C:040BH         LINE#         107
+  C:041DH         LINE#         110
+  C:0436H         LINE#         112
+  C:0439H         LINE#         113
+  C:0461H         LINE#         114
+  C:0461H         LINE#         115
+  C:047BH         LINE#         116
+  C:047DH         LINE#         117
+  C:047FH         LINE#         119
+  C:0492H         LINE#         120
+  C:04A7H         LINE#         121
+  C:04A7H         LINE#         122
+  C:04C0H         LINE#         123
+  C:04C2H         LINE#         124
+  C:04C4H         LINE#         126
+  C:04C7H         LINE#         127
+  C:04C9H         LINE#         128
+  C:04CBH         LINE#         129
+  C:04CDH         LINE#         131
+  C:04D6H         LINE#         132
+  C:04DEH         LINE#         134
+  C:04F3H         LINE#         135
+  C:050CH         LINE#         136
+  C:0521H         LINE#         137
+  C:053AH         LINE#         138
+  C:054FH         LINE#         139
+  C:0568H         LINE#         140
+  C:057DH         LINE#         141
+  C:057DH         LINE#         142
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        PCF8591_PHOTO
+
+  -------         MODULE        I2C
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0885H         PUBLIC        _I2CSendAddress
+  C:06D2H         PUBLIC        _I2CRead
+  C:0580H         PUBLIC        _I2CWrite
+  C:093FH         PUBLIC        _I2CTestAcknowledge
+  C:0824H         PUBLIC        _I2CStart
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/22/2017  15:19:36  PAGE 6
+
+
+  C:0857H         PUBLIC        _I2CStop
+  C:0937H         PUBLIC        i2c_delay_5us
+  C:08ABH         PUBLIC        _I2CSendReadContinueSignal
+  C:092EH         SYMBOL        L?0016
+  C:0932H         SYMBOL        L?0017
+  C:0933H         SYMBOL        L?0018
+  -------         PROC          L?0015
+  -------         ENDPROC       L?0015
+  C:092EH         SYMBOL        L?0016
+  C:0932H         SYMBOL        L?0017
+  C:0933H         SYMBOL        L?0018
+  -------         PROC          I2C_DELAY_5US
+  C:0937H         LINE#         3
+  C:0937H         LINE#         4
+  C:0937H         LINE#         5
+  C:0938H         LINE#         6
+  -------         ENDPROC       I2C_DELAY_5US
+  -------         PROC          _I2CSTART
+  D:0031H         SYMBOL        SCLControl
+  D:0034H         SYMBOL        SDAControl
+  C:0824H         LINE#         8
+  C:082AH         LINE#         9
+  C:082AH         LINE#         10
+  C:082AH         LINE#         11
+  C:082DH         LINE#         13
+  C:0838H         LINE#         14
+  C:083BH         LINE#         16
+  C:0846H         LINE#         17
+  C:0849H         LINE#         19
+  C:0854H         LINE#         20
+  -------         ENDPROC       _I2CSTART
+  -------         PROC          _I2CSTOP
+  D:0031H         SYMBOL        SCLControl
+  D:0034H         SYMBOL        SDAControl
+  C:0857H         LINE#         23
+  C:085DH         LINE#         24
+  C:085DH         LINE#         25
+  C:085DH         LINE#         26
+  C:0860H         LINE#         28
+  C:0866H         LINE#         29
+  C:0869H         LINE#         31
+  C:0874H         LINE#         32
+  C:0877H         LINE#         34
+  C:0882H         LINE#         35
+  -------         ENDPROC       _I2CSTOP
+  -------         PROC          _I2CTESTACKNOWLEDGE
+  D:0001H         SYMBOL        SDARead
+  C:093FH         LINE#         38
+  C:093FH         LINE#         39
+  C:093FH         LINE#         40
+  C:0943H         LINE#         41
+  -------         ENDPROC       _I2CTESTACKNOWLEDGE
+  -------         PROC          _I2CWRITE
+  D:003BH         SYMBOL        Data
+  D:003CH         SYMBOL        SCLControl
+  D:003FH         SYMBOL        SDAControl
+  D:0042H         SYMBOL        SDARead
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/22/2017  15:19:36  PAGE 7
+
+
+  -------         DO            
+  D:0045H         SYMBOL        i
+  -------         ENDDO         
+  C:0580H         LINE#         43
+  C:0588H         LINE#         46
+  C:0588H         LINE#         49
+  C:058BH         LINE#         50
+  C:058BH         LINE#         51
+  C:0596H         LINE#         52
+  C:0597H         LINE#         54
+  C:05A5H         LINE#         55
+  C:05A6H         LINE#         57
+  C:05B1H         LINE#         58
+  C:05B4H         LINE#         60
+  C:05BAH         LINE#         61
+  C:05C3H         LINE#         63
+  C:05CEH         LINE#         64
+  C:05CFH         LINE#         65
+  C:05DAH         LINE#         66
+  C:05DBH         LINE#         67
+  C:05E6H         LINE#         68
+  C:05E9H         LINE#         70
+  C:05F2H         LINE#         71
+  -------         ENDPROC       _I2CWRITE
+  -------         PROC          _I2CREAD
+  D:002FH         SYMBOL        SCLControl
+  D:0032H         SYMBOL        SDAControl
+  D:0035H         SYMBOL        SDARead
+  -------         DO            
+  D:0038H         SYMBOL        _data
+  D:0039H         SYMBOL        i
+  -------         ENDDO         
+  C:06D2H         LINE#         73
+  C:06D8H         LINE#         74
+  C:06D8H         LINE#         77
+  C:06DBH         LINE#         78
+  C:06DFH         LINE#         79
+  C:06E2H         LINE#         80
+  C:06EDH         LINE#         81
+  C:06F0H         LINE#         83
+  C:06FBH         LINE#         84
+  C:06FCH         LINE#         85
+  C:0707H         LINE#         86
+  C:070AH         LINE#         87
+  C:070AH         LINE#         88
+  C:0715H         LINE#         89
+  C:0716H         LINE#         91
+  C:0721H         LINE#         92
+  C:0727H         LINE#         93
+  C:0732H         LINE#         94
+  C:073BH         LINE#         96
+  C:073DH         LINE#         97
+  -------         ENDPROC       _I2CREAD
+  -------         PROC          _I2CSENDREADCONTINUESIGNAL
+  D:0011H         SYMBOL        SCLControl
+  D:0014H         SYMBOL        SDAControl
+  C:08ABH         LINE#         99
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/22/2017  15:19:36  PAGE 8
+
+
+  C:08B1H         LINE#         100
+  C:08B1H         LINE#         101
+  C:08B1H         LINE#         102
+  C:08B4H         LINE#         103
+  C:08BAH         LINE#         104
+  C:08BDH         LINE#         105
+  C:08C8H         LINE#         106
+  -------         ENDPROC       _I2CSENDREADCONTINUESIGNAL
+  -------         PROC          _I2CSENDADDRESS
+  D:0007H         SYMBOL        Address
+  B:0020H.1       SYMBOL        IsRead
+  D:0032H         SYMBOL        SCLControl
+  D:0035H         SYMBOL        SDAControl
+  D:0038H         SYMBOL        SDARead
+  C:0885H         LINE#         109
+  C:0885H         LINE#         113
+  C:0885H         LINE#         114
+  C:08AAH         LINE#         115
+  -------         ENDPROC       _I2CSENDADDRESS
+  -------         ENDMOD        I2C
+
+  -------         MODULE        PCF8591
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0916H         PUBLIC        _PCF8591Close
+  C:08CBH         PUBLIC        _PCF8591Send
+  C:090AH         PUBLIC        _PCF8591ReceiveContinue
+  C:078FH         PUBLIC        _PCF8591OpenRead
+  C:073EH         PUBLIC        _PCF8591OpenWrite
+  C:08E4H         PUBLIC        _PCF8591Receive
+  -------         PROC          _PCF8591OPENWRITE
+  D:0026H         SYMBOL        Address
+  D:0027H         SYMBOL        SCLSet
+  D:002AH         SYMBOL        SDASet
+  D:002DH         SYMBOL        SDARead
+  -------         DO            
+  D:0030H         SYMBOL        result
+  -------         ENDDO         
+  C:073EH         LINE#         8
+  C:0746H         LINE#         11
+  C:0746H         LINE#         14
+  C:0752H         LINE#         15
+  C:0778H         LINE#         17
+  C:077AH         LINE#         18
+  C:078CH         LINE#         19
+  C:078EH         LINE#         20
+  -------         ENDPROC       _PCF8591OPENWRITE
+  -------         PROC          _PCF8591SEND
+  D:0007H         SYMBOL        Data
+  D:0001H         SYMBOL        SCLSet
+  D:002AH         SYMBOL        SDASet
+  D:002DH         SYMBOL        SDARead
+  C:08CBH         LINE#         23
+  C:08CBH         LINE#         25
+  C:08CBH         LINE#         26
+  C:08E3H         LINE#         27
+  -------         ENDPROC       _PCF8591SEND
+  -------         PROC          _PCF8591OPENREAD
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/22/2017  15:19:36  PAGE 9
+
+
+  D:0026H         SYMBOL        Address
+  D:0027H         SYMBOL        SCLSet
+  D:002AH         SYMBOL        SDASet
+  D:002DH         SYMBOL        SDARead
+  -------         DO            
+  D:0030H         SYMBOL        result
+  -------         ENDDO         
+  C:078FH         LINE#         29
+  C:0797H         LINE#         32
+  C:0797H         LINE#         35
+  C:07A3H         LINE#         36
+  C:07C9H         LINE#         38
+  C:07CBH         LINE#         39
+  C:07DDH         LINE#         41
+  C:07DFH         LINE#         42
+  -------         ENDPROC       _PCF8591OPENREAD
+  -------         PROC          _PCF8591RECEIVE
+  D:0001H         SYMBOL        SCLSet
+  D:0029H         SYMBOL        SDASet
+  D:002CH         SYMBOL        SDARead
+  C:08E4H         LINE#         44
+  C:08E4H         LINE#         45
+  C:08E4H         LINE#         46
+  C:08F9H         LINE#         47
+  -------         ENDPROC       _PCF8591RECEIVE
+  -------         PROC          _PCF8591RECEIVECONTINUE
+  D:0001H         SYMBOL        SCLSet
+  D:001AH         SYMBOL        SDASet
+  C:090AH         LINE#         49
+  C:090AH         LINE#         50
+  C:090AH         LINE#         51
+  -------         ENDPROC       _PCF8591RECEIVECONTINUE
+  -------         PROC          _PCF8591CLOSE
+  D:0001H         SYMBOL        SCLSet
+  D:0029H         SYMBOL        SDASet
+  C:0916H         LINE#         54
+  C:0916H         LINE#         55
+  C:0916H         LINE#         56
+  -------         ENDPROC       _PCF8591CLOSE
+  -------         ENDMOD        PCF8591
+
+  -------         MODULE        ?C?FPADD
+  C:0015H         PUBLIC        ?C?FPADD
+  C:0011H         PUBLIC        ?C?FPSUB
+  -------         ENDMOD        ?C?FPADD
+
+  -------         MODULE        ?C?FPMUL
+  C:0106H         PUBLIC        ?C?FPMUL
+  -------         ENDMOD        ?C?FPMUL
+
+  -------         MODULE        ?C?FCAST
+  C:0216H         PUBLIC        ?C?FCASTC
+  C:0211H         PUBLIC        ?C?FCASTI
+  C:020CH         PUBLIC        ?C?FCASTL
+  -------         ENDMOD        ?C?FCAST
+
+  -------         MODULE        ?C?CASTF
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/22/2017  15:19:36  PAGE 10
+
+
+  C:024AH         PUBLIC        ?C?CASTF
+  -------         ENDMOD        ?C?CASTF
+
+  -------         MODULE        ?C?SLDIV
+  C:07E0H         PUBLIC        ?C?SLDIV
+  -------         ENDMOD        ?C?SLDIV
+
+  -------         MODULE        ?C?LNEG
+  C:02CBH         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
+
+  -------         MODULE        ?C?SLCMP
+  C:02D9H         PUBLIC        ?C?SLCMP
+  -------         ENDMOD        ?C?SLCMP
+
+  -------         MODULE        ?C?ICALL
+  C:02EFH         PUBLIC        ?C?ICALL
+  C:02F3H         PUBLIC        ?C?ICALL2
+  -------         ENDMOD        ?C?ICALL
+
+  -------         MODULE        ?C?ULDIV
+  C:0331H         PUBLIC        ?C?ULDIV
+  -------         ENDMOD        ?C?ULDIV
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_PCF8591RECEIVECONTINUE?PCF8591
+
+Program Size: data=67.2 xdata=0 code=2373
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

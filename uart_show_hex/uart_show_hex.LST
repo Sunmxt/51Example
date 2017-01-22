@@ -1,0 +1,122 @@
+C51 COMPILER V9.00   UART_SHOW_HEX                                                         12/20/2016 01:10:37 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE UART_SHOW_HEX
+OBJECT MODULE PLACED IN uart_show_hex.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\Keil\C51\BIN\C51.EXE uart_show_hex.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          
+   3          typedef unsigned char uchar;
+   4          
+   5          uchar code DisplayCode[] =
+   6            {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 0x80, 0x90, 0x88, 0x83, 0xCA, 0xE1, 0x86, 0x8E};
+   7          
+   8          uchar ShowHex[4];
+   9          uchar loop_hex;
+  10          
+  11          #define OSCILLATOR_FREQUENCY  11.0592
+  12          #define UART_BITRATE          4800
+  13            
+  14          #define UART_TIMER_MODE_2_TICK ((unsigned char)(256 - (OSCILLATOR_FREQUENCY*1000000/(12*32*UART_BITRATE)))
+             -)
+  15          
+  16          void init()
+  17          { 
+  18   1        loop_hex = 0;
+  19   1        ShowHex[0] = 0;
+  20   1        ShowHex[1] = 0;
+  21   1        ShowHex[2] = 0;
+  22   1        ShowHex[3] = 0;
+  23   1        
+  24   1        //set timer 1
+  25   1        TMOD = 0x21;
+  26   1        TH1 = 0xFA;
+  27   1        TL1 = 0xFA;
+  28   1        
+  29   1        TH0 = 0xFC;
+  30   1        TL0 = 0x67;
+  31   1        
+  32   1        //UART mode
+  33   1        SM0 = 0;
+  34   1        SM1 = 1;
+  35   1        
+  36   1        REN = 1;
+  37   1        
+  38   1        //intertupt enable
+  39   1        ES = 1;   //uart
+  40   1        EA = 1;   //all
+  41   1        
+  42   1        TR1 = 1;  //start timer 1
+  43   1        TR0 = 1;  //start timer 0
+  44   1      }
+  45          
+  46          void convert_and_set_hex(uchar Value)
+  47          {
+  48   1        int i;
+  49   1        
+  50   1        for(i = 0 ; i < 4 && Value; i++)
+  51   1        {
+  52   2          ShowHex[i] = Value % 10;
+  53   2          Value /= 10;
+  54   2        }
+C51 COMPILER V9.00   UART_SHOW_HEX                                                         12/20/2016 01:10:37 PAGE 2   
+
+  55   1        
+  56   1        for(; i < 4 ; i++)
+  57   1          ShowHex[i] = 0;
+  58   1      }
+  59          
+  60          void uart_interrupt() interrupt 4
+  61          {
+  62   1        uchar received;
+  63   1        if(RI)
+  64   1        {
+  65   2          received = SBUF;
+  66   2          RI = 0;
+  67   2          convert_and_set_hex(received);
+  68   2        }
+  69   1      }
+  70          
+  71          void hex_display()
+  72          {
+  73   1        P2 = ~(1 << loop_hex);
+  74   1        P0 = DisplayCode[ShowHex[3 - loop_hex]];
+  75   1        
+  76   1        loop_hex++;
+  77   1        if(loop_hex > 3)
+  78   1          loop_hex = 0;
+  79   1      }
+  80          
+  81          void main()
+  82          {
+  83   1        init();
+  84   1        
+  85   1        for(;;)
+  86   1        {
+  87   2            if(TF0)
+  88   2            {
+  89   3              TF0 = 0;
+  90   3              TH0 = 0xFC;
+  91   3              TL0 = 0x67;
+  92   3              
+  93   3              hex_display();
+  94   3            }
+  95   2        }
+  96   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    204    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

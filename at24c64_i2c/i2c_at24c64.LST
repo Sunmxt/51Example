@@ -1,0 +1,379 @@
+C51 COMPILER V9.00   I2C_AT24C64                                                           01/04/2017 23:37:49 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE I2C_AT24C64
+OBJECT MODULE PLACED IN i2c_at24c64.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\Keil\C51\BIN\C51.EXE i2c_at24c64.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          typedef unsigned char uchar;
+   5          typedef unsigned char ushort;
+   6          typedef unsigned int uint;
+   7          
+   8          #define AT24C64_ADDRESS 0xA2
+   9          
+  10          sbit SDA = P1^3;
+  11          sbit SCL = P1^2;
+  12          sbit LED8 = P1^7;
+  13          sbit LED7 = P1^6;
+  14          sbit LED6 = P1^5;
+  15          sbit LED5 = P1^4;
+  16          
+  17          
+  18          
+  19          void i2c_delay_5us()
+  20          {
+  21   1        _nop_();
+  22   1      }
+  23          
+  24          void I2CStart(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value))
+  25          {
+  26   1        SCLControl(0);
+  27   1        i2c_delay_5us();
+  28   1        
+  29   1        SDAControl(1);
+  30   1        i2c_delay_5us();
+  31   1        
+  32   1        SCLControl(1);
+  33   1        i2c_delay_5us();
+  34   1        
+  35   1        SDAControl(0);
+  36   1        i2c_delay_5us();
+  37   1      }
+  38          
+  39          void I2CStop(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value))
+  40          {
+  41   1        SCLControl(0);
+  42   1        i2c_delay_5us();
+  43   1        
+  44   1        SDAControl(0);
+  45   1        i2c_delay_5us();
+  46   1        
+  47   1        SCLControl(1);
+  48   1        i2c_delay_5us();
+  49   1      
+  50   1        SDAControl(1);
+  51   1        i2c_delay_5us();
+  52   1      }
+  53          
+  54          bit I2CTestAcknowledge(bit (*SDARead)())
+  55          {
+C51 COMPILER V9.00   I2C_AT24C64                                                           01/04/2017 23:37:49 PAGE 2   
+
+  56   1        return !SDARead();
+  57   1      }
+  58          
+  59          bit I2CWrite(uchar Data, void (*SCLControl)(uchar value)
+  60                          , void (*SDAControl)(uchar value)
+  61                          , bit (*SDARead)())
+  62          {
+  63   1        uchar i;
+  64   1        
+  65   1        for(i = 0 ; i < 8 ; i++)
+  66   1        {
+  67   2          SCLControl(0);
+  68   2          _nop_();
+  69   2          
+  70   2          SDAControl(Data & 0x80);
+  71   2          _nop_();
+  72   2         
+  73   2          SCLControl(1);
+  74   2          i2c_delay_5us();
+  75   2          
+  76   2          Data <<= 1;
+  77   2        }
+  78   1        
+  79   1        SCLControl(0);
+  80   1        _nop_();
+  81   1        SDAControl(1);
+  82   1        _nop_();
+  83   1        SCLControl(1);
+  84   1        i2c_delay_5us();
+  85   1        
+  86   1        return I2CTestAcknowledge(SDARead);
+  87   1      }
+  88          
+  89          uchar I2CRead(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value), bit (*SDARead)())
+  90          {
+  91   1        uchar _data, i;
+  92   1        
+  93   1        _data = 0;
+  94   1        SCLControl(0);
+  95   1        i2c_delay_5us();
+  96   1        SDAControl(1);
+  97   1        i2c_delay_5us();
+  98   1        
+  99   1        SCLControl(1);
+ 100   1        _nop_();
+ 101   1        _data = SDARead();
+ 102   1        for(i = 1 ; i < 8 ; i++)
+ 103   1        {
+ 104   2          SCLControl(0);
+ 105   2          _nop_();
+ 106   2          
+ 107   2          SCLControl(1);
+ 108   2          _data <<= 1;
+ 109   2          _data |= SDARead();
+ 110   2        }
+ 111   1        
+ 112   1        return _data;
+ 113   1      }
+ 114          
+ 115          void I2CSendReadContinueSignal(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value))
+ 116          {
+ 117   1        SCLControl(0);
+C51 COMPILER V9.00   I2C_AT24C64                                                           01/04/2017 23:37:49 PAGE 3   
+
+ 118   1        i2c_delay_5us();
+ 119   1        SDAControl(0);
+ 120   1        i2c_delay_5us();
+ 121   1        SCLControl(1);
+ 122   1        i2c_delay_5us();
+ 123   1      }
+ 124          
+ 125          bit I2CSendAddress(uchar Address, bit IsRead
+ 126                          , void (*SCLControl)(uchar value)
+ 127                          , void (*SDAControl)(uchar value)
+ 128                          , bit (*SDARead)())
+ 129          {
+ 130   1        return I2CWrite(((Address & 0x07) << 1) | 0xA0 | IsRead, SCLControl, SDAControl, SDARead);
+ 131   1      }
+ 132          
+ 133          
+ 134          /////////////////////
+ 135          
+ 136          void at24c64_sda_control(uchar Value)
+ 137          {
+ 138   1        SDA = Value;
+ 139   1      }
+ 140          
+ 141          void at24c64_scl_control(uchar Value)
+ 142          {
+ 143   1        SCL = Value;
+ 144   1      }
+ 145          
+ 146          bit at24c64_sda_read()
+ 147          {return SDA;}
+ 148          
+ 149          #define SUCCEED             0
+ 150          #define ERR_DEVICE_ADDRESS  1
+ 151          #define ERR_DATA_ADDRESS_1  2
+ 152          #define ERR_DATA_ADDRESS_2  3
+ 153          #define ERR_DATA            4
+ 154          uchar AT24C64PageWrite(uchar DeviceAddress, ushort DataAddress, uchar *Data, uint Size)
+ 155          { 
+ 156   1        uchar status;
+ 157   1        uint i; 
+ 158   1        
+ 159   1        status = SUCCEED;
+ 160   1        
+ 161   1        I2CStart(at24c64_scl_control, at24c64_sda_control);
+ 162   1        
+ 163   1        if(!I2CSendAddress(DeviceAddress, 0, at24c64_scl_control, at24c64_sda_control, at24c64_sda_read)) {
+ 164   2          status = ERR_DEVICE_ADDRESS;
+ 165   2          goto AT24C64_Write_Exception;
+ 166   2        }
+ 167   1        if(!I2CWrite(DataAddress >> 8, at24c64_scl_control, at24c64_sda_control, at24c64_sda_read)) {
+ 168   2          status = ERR_DATA_ADDRESS_1;
+ 169   2          goto AT24C64_Write_Exception;
+ 170   2        }
+ 171   1        if(!I2CWrite(DataAddress & 0x00FF, at24c64_scl_control, at24c64_sda_control, at24c64_sda_read)) {
+ 172   2          status = ERR_DATA_ADDRESS_2;
+ 173   2          goto AT24C64_Write_Exception;
+ 174   2        }
+ 175   1        
+ 176   1        for(i = 0 ; i < Size ; i++)
+ 177   1          if(!I2CWrite(Data[i], at24c64_scl_control, at24c64_sda_control, at24c64_sda_read)) {
+ 178   2            status = ERR_DATA;
+ 179   2            goto AT24C64_Write_Exception;
+C51 COMPILER V9.00   I2C_AT24C64                                                           01/04/2017 23:37:49 PAGE 4   
+
+ 180   2          }
+ 181   1        
+ 182   1      AT24C64_Write_Exception:
+ 183   1        I2CStop(at24c64_scl_control, at24c64_sda_control);
+ 184   1      
+ 185   1        return status;
+ 186   1      }
+ 187          
+ 188          uchar AT24C64Write(uchar DeviceAddress, ushort DataAddress, uchar Data)
+ 189          {return AT24C64PageWrite(DeviceAddress, DataAddress, &Data, 1);}
+ 190          
+ 191          uchar AT24C64PageRead(uchar DeviceAddress, ushort DataAddress, uchar *Data, uint Size)
+ 192          {
+ 193   1        uint i;
+ 194   1        uchar status;
+ 195   1        
+ 196   1        status = SUCCEED;
+ 197   1        
+ 198   1        I2CStart(at24c64_scl_control, at24c64_sda_control);
+ 199   1        if(!I2CSendAddress(DeviceAddress , 0, at24c64_scl_control, at24c64_sda_control, at24c64_sda_read)) {
+ 200   2          status = ERR_DEVICE_ADDRESS;
+ 201   2          goto AT24C64_Page_Read_Exception;
+ 202   2        }
+ 203   1        if(!I2CWrite(DataAddress >> 8, at24c64_scl_control, at24c64_sda_control, at24c64_sda_read)) {
+ 204   2          LED6 = 0;
+ 205   2          status = ERR_DATA_ADDRESS_1;
+ 206   2          goto AT24C64_Page_Read_Exception;
+ 207   2        }
+ 208   1        if(!I2CWrite(DataAddress & 0x00FF, at24c64_scl_control, at24c64_sda_control, at24c64_sda_read)) {
+ 209   2          LED5 = 0;
+ 210   2          status = ERR_DATA_ADDRESS_2;
+ 211   2          goto AT24C64_Page_Read_Exception;
+ 212   2        }
+ 213   1          
+ 214   1        I2CStart(at24c64_scl_control, at24c64_sda_control);
+ 215   1        if(!I2CSendAddress(DeviceAddress , 1, at24c64_scl_control, at24c64_sda_control, at24c64_sda_read)){
+ 216   2          status = ERR_DEVICE_ADDRESS;
+ 217   2          goto AT24C64_Page_Read_Exception;
+ 218   2        }
+ 219   1        
+ 220   1        i = 0;
+ 221   1        for(;;)
+ 222   1        {
+ 223   2          Data[i] = I2CRead(at24c64_scl_control, at24c64_sda_control, at24c64_sda_read);
+ 224   2          i++;
+ 225   2          if(i >= Size) break;
+ 226   2          I2CSendReadContinueSignal(at24c64_scl_control, at24c64_sda_control);
+ 227   2        }
+ 228   1        
+ 229   1      AT24C64_Page_Read_Exception:
+ 230   1        I2CStop(at24c64_scl_control, at24c64_sda_control);
+ 231   1        
+ 232   1        return status;
+ 233   1      }
+ 234          
+ 235          uchar AT24C64Read(uchar DeviceAddress, ushort DataAddress ,uchar *Data)
+ 236          {return AT24C64PageRead(DeviceAddress, DataAddress, Data, 1);}
+ 237          
+ 238          
+ 239          uchar code DisplayCode[] =
+ 240            {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 0x80, 0x90, 0x88, 0x83, 0xCA, 0xE1, 0x86, 0x8E};
+ 241            
+C51 COMPILER V9.00   I2C_AT24C64                                                           01/04/2017 23:37:49 PAGE 5   
+
+ 242            
+ 243          uchar Digital[2];
+ 244          uint counter_ms;
+ 245            
+ 246          void init()
+ 247          {
+ 248   1        uchar _data;
+ 249   1        
+ 250   1        if(SUCCEED == AT24C64Read(0x01, 0, &_data))
+ 251   1          LED7 = 0;
+ 252   1        else
+ 253   1          LED6 = 0;
+ 254   1        
+ 255   1        Digital[0] = _data % 10;
+ 256   1        Digital[1] = _data / 10;
+ 257   1        
+ 258   1        /*Digital[0] = 0;
+ 259   1        Digital[1] = 0;
+ 260   1        */
+ 261   1        
+ 262   1        counter_ms = 0;
+ 263   1       
+ 264   1        TMOD = 0x01;
+ 265   1        TH0 = 0xFC;
+ 266   1        TL0 = 0x67;
+ 267   1        TF0 = 0;
+ 268   1        TR0 = 1;
+ 269   1        
+ 270   1        ET0 = 1;
+ 271   1        EA = 1;
+ 272   1      }
+ 273          
+ 274          void timer_0_interrupt() interrupt 1
+ 275          {
+ 276   1        TH0 = 0xFC;
+ 277   1        TL0 = 0x67;
+ 278   1        
+ 279   1        if(counter_ms & 1)
+ 280   1        {
+ 281   2          P2 = 0xF7;
+ 282   2          P0 = DisplayCode[Digital[0]];
+ 283   2        }
+ 284   1        else
+ 285   1        {
+ 286   2          P2 = 0xFB;
+ 287   2          P0 = DisplayCode[Digital[1]];
+ 288   2        }
+ 289   1      
+ 290   1        counter_ms++;
+ 291   1        if(counter_ms >= 5000)
+ 292   1        {
+ 293   2          counter_ms = 0;
+ 294   2          
+ 295   2          Digital[0] ++;
+ 296   2          if( Digital[0] > 9 )
+ 297   2          {
+ 298   3            Digital[1]++;
+ 299   3            Digital[0] = 0;
+ 300   3          }
+ 301   2          if( Digital[1] > 9)
+ 302   2            Digital[1] = 0;
+ 303   2          
+C51 COMPILER V9.00   I2C_AT24C64                                                           01/04/2017 23:37:49 PAGE 6   
+
+ 304   2          if(SUCCEED == AT24C64Write(0x01 ,0 ,Digital[1]*10 + Digital[0]))
+ 305   2            LED8 = 0;
+ 306   2          else
+ 307   2            LED8 = 1;
+ 308   2        }
+ 309   1      }
+ 310          
+ 311          void main()
+ 312          {
+ 313   1        init();
+ 314   1        
+ 315   1        /*
+ 316   1        uchar dat;
+ 317   1        uint i ,j;
+ 318   1        
+ 319   1        
+ 320   1        
+ 321   1        
+ 322   1        
+ 323   1        uchar buf[] = {0xAA ,0xAB ,0x89 ,0xC6};
+ 324   1        
+ 325   1        if(SUCCEED == AT24C64PageWrite(0x01, 0, buf, 4))
+ 326   1          LED8 = 0;
+ 327   1        
+ 328   1        */
+ 329   1        /*
+ 330   1        uchar buf[4];
+ 331   1        if(SUCCEED == AT24C64PageRead(0x01 , 0, buf, 4))
+ 332   1          LED8 = 0;
+ 333   1        
+ 334   1        for(j = 0 ; ; j ++)
+ 335   1        {
+ 336   1          if(j > 3) j = 0;
+ 337   1          
+ 338   1          for(i = 65535 ; i ; i --)
+ 339   1            _nop_();
+ 340   1          
+ 341   1          P1 = buf[j];
+ 342   1        }
+ 343   1        */
+ 344   1        while(1)
+ 345   1          _nop_();
+ 346   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1235    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4      72
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

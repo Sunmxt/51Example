@@ -1,0 +1,547 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        01/04/2017  23:37:49  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\PROGRAM FILES (X86)\KEIL\C51\BIN\BL51.EXE i2c_at24c64.obj TO i2c_eeprom_at24c64
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  i2c_at24c64.obj (I2C_AT24C64)
+  D:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  D:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C?CSTOPTR)
+  D:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C?ICALL)
+
+
+LINK MAP OF MODULE:  i2c_eeprom_at24c64 (I2C_AT24C64)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         ?DT?I2C_AT24C64
+                    000CH     0014H                  *** GAP ***
+            BIT     0020H.0   0000H.2   UNIT         _BIT_GROUP_
+                    0020H.2   0000H.6                *** GAP ***
+            DATA    0021H     0040H     UNIT         _DATA_GROUP_
+            IDATA   0061H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0006H     UNIT         ?PR?_AT24C64_SDA_CONTROL?I2C_AT24C64
+                    0009H     0002H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     013AH     UNIT         ?PR?_AT24C64PAGEREAD?I2C_AT24C64
+            CODE    0148H     00F3H     UNIT         ?PR?_AT24C64PAGEWRITE?I2C_AT24C64
+            CODE    023BH     009DH     UNIT         ?PR?TIMER_0_INTERRUPT?I2C_AT24C64
+            CODE    02D8H     0073H     UNIT         ?PR?_I2CWRITE?I2C_AT24C64
+            CODE    034BH     006CH     UNIT         ?PR?_I2CREAD?I2C_AT24C64
+            CODE    03B7H     0055H     UNIT         ?C?LIB_CODE
+            CODE    040CH     003EH     UNIT         ?PR?INIT?I2C_AT24C64
+            CODE    044AH     0033H     UNIT         ?PR?_I2CSTART?I2C_AT24C64
+            CODE    047DH     002EH     UNIT         ?PR?_I2CSTOP?I2C_AT24C64
+            CODE    04ABH     002AH     UNIT         ?PR?_I2CSENDADDRESS?I2C_AT24C64
+            CODE    04D5H     0020H     UNIT         ?PR?_I2CSENDREADCONTINUESIGNAL?I2C_AT24C64
+            CODE    04F5H     0012H     UNIT         ?PR?_AT24C64WRITE?I2C_AT24C64
+            CODE    0507H     0010H     UNIT         ?CO?I2C_AT24C64
+            CODE    0517H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0523H     000BH     UNIT         ?PR?I2C_DELAY_5US?I2C_AT24C64
+            CODE    052EH     000AH     UNIT         ?PR?_AT24C64READ?I2C_AT24C64
+            CODE    0538H     0006H     UNIT         ?PR?_AT24C64_SCL_CONTROL?I2C_AT24C64
+            CODE    053EH     0006H     UNIT         ?PR?MAIN?I2C_AT24C64
+            CODE    0544H     0005H     UNIT         ?PR?_I2CTESTACKNOWLEDGE?I2C_AT24C64
+            CODE    0549H     0003H     UNIT         ?PR?AT24C64_SDA_READ?I2C_AT24C64
+
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2017  23:37:49  PAGE 2
+
+
+OVERLAY MAP OF MODULE:   i2c_eeprom_at24c64 (I2C_AT24C64)
+
+
+SEGMENT                                             BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT                            START    LENGTH     START    LENGTH
+------------------------------------------------------------------------------------
+?PR?TIMER_0_INTERRUPT?I2C_AT24C64                -----    -----      -----    -----
+  +--> ?CO?I2C_AT24C64
+  +--> ?PR?_AT24C64WRITE?I2C_AT24C64
+
+?PR?_AT24C64WRITE?I2C_AT24C64                    -----    -----      0021H    0001H
+  +--> ?PR?_AT24C64PAGEWRITE?I2C_AT24C64
+
+?PR?_AT24C64PAGEWRITE?I2C_AT24C64                -----    -----      0022H    000AH
+  +--> ?PR?_AT24C64_SDA_CONTROL?I2C_AT24C64
+  +--> ?PR?_AT24C64_SCL_CONTROL?I2C_AT24C64
+  +--> ?PR?_I2CSTART?I2C_AT24C64
+  +--> ?PR?AT24C64_SDA_READ?I2C_AT24C64
+  +--> ?PR?_I2CSENDADDRESS?I2C_AT24C64
+  +--> ?PR?_I2CWRITE?I2C_AT24C64
+  +--> ?PR?_I2CSTOP?I2C_AT24C64
+
+?PR?_I2CSTART?I2C_AT24C64                        -----    -----      004CH    0006H
+  +--> ?PR?I2C_DELAY_5US?I2C_AT24C64
+
+?PR?_I2CSENDADDRESS?I2C_AT24C64                  0020H.1  0000H.1    004CH    000AH
+  +--> ?PR?_I2CWRITE?I2C_AT24C64
+
+?PR?_I2CWRITE?I2C_AT24C64                        -----    -----      0056H    000BH
+  +--> ?PR?I2C_DELAY_5US?I2C_AT24C64
+  +--> ?PR?_I2CTESTACKNOWLEDGE?I2C_AT24C64
+
+?PR?_I2CSTOP?I2C_AT24C64                         -----    -----      004CH    0006H
+  +--> ?PR?I2C_DELAY_5US?I2C_AT24C64
+
+*** NEW ROOT ***************************************************
+
+?C_C51STARTUP                                    -----    -----      -----    -----
+  +--> ?PR?MAIN?I2C_AT24C64
+
+?PR?MAIN?I2C_AT24C64                             -----    -----      -----    -----
+  +--> ?PR?INIT?I2C_AT24C64
+
+?PR?INIT?I2C_AT24C64                             -----    -----      0041H    0001H
+  +--> ?PR?_AT24C64READ?I2C_AT24C64
+
+?PR?_AT24C64READ?I2C_AT24C64                     -----    -----      -----    -----
+  +--> ?PR?_AT24C64PAGEREAD?I2C_AT24C64
+
+?PR?_AT24C64PAGEREAD?I2C_AT24C64                 -----    -----      0042H    000AH
+  +--> ?PR?_AT24C64_SDA_CONTROL?I2C_AT24C64
+  +--> ?PR?_AT24C64_SCL_CONTROL?I2C_AT24C64
+  +--> ?PR?_I2CSTART?I2C_AT24C64
+  +--> ?PR?AT24C64_SDA_READ?I2C_AT24C64
+  +--> ?PR?_I2CSENDADDRESS?I2C_AT24C64
+  +--> ?PR?_I2CWRITE?I2C_AT24C64
+  +--> ?PR?_I2CREAD?I2C_AT24C64
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2017  23:37:49  PAGE 3
+
+
+  +--> ?PR?_I2CSENDREADCONTINUESIGNAL?I2C_AT...
+  +--> ?PR?_I2CSTOP?I2C_AT24C64
+
+?PR?_I2CREAD?I2C_AT24C64                         -----    -----      004CH    000BH
+  +--> ?PR?I2C_DELAY_5US?I2C_AT24C64
+
+?PR?_I2CSENDREADCONTINUESIGNAL?I2C_AT...         -----    -----      004CH    0006H
+  +--> ?PR?I2C_DELAY_5US?I2C_AT24C64
+
+
+
+SYMBOL TABLE OF MODULE:  i2c_eeprom_at24c64 (I2C_AT24C64)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        I2C_AT24C64
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  C:023BH         PUBLIC        timer_0_interrupt
+  B:0090H.4       PUBLIC        LED5
+  C:0003H         PUBLIC        _at24c64_sda_control
+  B:0090H.5       PUBLIC        LED6
+  B:0090H.6       PUBLIC        LED7
+  B:0090H.7       PUBLIC        LED8
+  D:00A8H         PUBLIC        IE
+  C:0538H         PUBLIC        _at24c64_scl_control
+  C:04ABH         PUBLIC        _I2CSendAddress
+  D:00B8H         PUBLIC        IP
+  C:0549H         PUBLIC        at24c64_sda_read
+  C:053EH         PUBLIC        main
+  C:052EH         PUBLIC        _AT24C64Read
+  C:000EH         PUBLIC        _AT24C64PageRead
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:040CH         PUBLIC        init
+  C:04F5H         PUBLIC        _AT24C64Write
+  C:0148H         PUBLIC        _AT24C64PageWrite
+  C:034BH         PUBLIC        _I2CRead
+  D:0008H         PUBLIC        Digital
+  D:000AH         PUBLIC        counter_ms
+  B:00A8H.1       PUBLIC        ET0
+  B:0088H.5       PUBLIC        TF0
+  D:008CH         PUBLIC        TH0
+  C:02D8H         PUBLIC        _I2CWrite
+  C:0544H         PUBLIC        _I2CTestAcknowledge
+  C:044AH         PUBLIC        _I2CStart
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  C:0507H         PUBLIC        DisplayCode
+  B:0090H.3       PUBLIC        SDA
+  B:0090H.2       PUBLIC        SCL
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2017  23:37:49  PAGE 4
+
+
+  C:047DH         PUBLIC        _I2CStop
+  D:00C8H         PUBLIC        T2CON
+  C:052CH         PUBLIC        i2c_delay_5us
+  C:04D5H         PUBLIC        _I2CSendReadContinueSignal
+  D:00D0H         PUBLIC        PSW
+  C:0523H         SYMBOL        L?0058
+  C:0527H         SYMBOL        L?0059
+  C:0528H         SYMBOL        L?0060
+  -------         PROC          L?0057
+  -------         ENDPROC       L?0057
+  C:0523H         SYMBOL        L?0058
+  C:0527H         SYMBOL        L?0059
+  C:0528H         SYMBOL        L?0060
+  -------         PROC          I2C_DELAY_5US
+  C:052CH         LINE#         19
+  C:052CH         LINE#         20
+  C:052CH         LINE#         21
+  C:052DH         LINE#         22
+  -------         ENDPROC       I2C_DELAY_5US
+  -------         PROC          _I2CSTART
+  D:004CH         SYMBOL        SCLControl
+  D:004FH         SYMBOL        SDAControl
+  C:044AH         LINE#         24
+  C:0450H         LINE#         25
+  C:0450H         LINE#         26
+  C:0450H         LINE#         27
+  C:0453H         LINE#         29
+  C:045EH         LINE#         30
+  C:0461H         LINE#         32
+  C:046CH         LINE#         33
+  C:046FH         LINE#         35
+  C:047AH         LINE#         36
+  -------         ENDPROC       _I2CSTART
+  -------         PROC          _I2CSTOP
+  D:004CH         SYMBOL        SCLControl
+  D:004FH         SYMBOL        SDAControl
+  C:047DH         LINE#         39
+  C:0483H         LINE#         40
+  C:0483H         LINE#         41
+  C:0483H         LINE#         42
+  C:0486H         LINE#         44
+  C:048CH         LINE#         45
+  C:048FH         LINE#         47
+  C:049AH         LINE#         48
+  C:049DH         LINE#         50
+  C:04A8H         LINE#         51
+  -------         ENDPROC       _I2CSTOP
+  -------         PROC          _I2CTESTACKNOWLEDGE
+  D:0001H         SYMBOL        SDARead
+  C:0544H         LINE#         54
+  C:0544H         LINE#         55
+  C:0544H         LINE#         56
+  C:0548H         LINE#         57
+  -------         ENDPROC       _I2CTESTACKNOWLEDGE
+  -------         PROC          _I2CWRITE
+  D:0056H         SYMBOL        Data
+  D:0057H         SYMBOL        SCLControl
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2017  23:37:49  PAGE 5
+
+
+  D:005AH         SYMBOL        SDAControl
+  D:005DH         SYMBOL        SDARead
+  -------         DO            
+  D:0060H         SYMBOL        i
+  -------         ENDDO         
+  C:02D8H         LINE#         59
+  C:02E0H         LINE#         62
+  C:02E0H         LINE#         65
+  C:02E3H         LINE#         66
+  C:02E3H         LINE#         67
+  C:02EEH         LINE#         68
+  C:02EFH         LINE#         70
+  C:02FDH         LINE#         71
+  C:02FEH         LINE#         73
+  C:0309H         LINE#         74
+  C:030CH         LINE#         76
+  C:0312H         LINE#         77
+  C:031BH         LINE#         79
+  C:0326H         LINE#         80
+  C:0327H         LINE#         81
+  C:0332H         LINE#         82
+  C:0333H         LINE#         83
+  C:033EH         LINE#         84
+  C:0341H         LINE#         86
+  C:034AH         LINE#         87
+  -------         ENDPROC       _I2CWRITE
+  -------         PROC          _I2CREAD
+  D:004CH         SYMBOL        SCLControl
+  D:004FH         SYMBOL        SDAControl
+  D:0052H         SYMBOL        SDARead
+  -------         DO            
+  D:0055H         SYMBOL        _data
+  D:0056H         SYMBOL        i
+  -------         ENDDO         
+  C:034BH         LINE#         89
+  C:0351H         LINE#         90
+  C:0351H         LINE#         93
+  C:0354H         LINE#         94
+  C:0358H         LINE#         95
+  C:035BH         LINE#         96
+  C:0366H         LINE#         97
+  C:0369H         LINE#         99
+  C:0374H         LINE#         100
+  C:0375H         LINE#         101
+  C:0380H         LINE#         102
+  C:0383H         LINE#         103
+  C:0383H         LINE#         104
+  C:038EH         LINE#         105
+  C:038FH         LINE#         107
+  C:039AH         LINE#         108
+  C:03A0H         LINE#         109
+  C:03ABH         LINE#         110
+  C:03B4H         LINE#         112
+  C:03B6H         LINE#         113
+  -------         ENDPROC       _I2CREAD
+  -------         PROC          _I2CSENDREADCONTINUESIGNAL
+  D:004CH         SYMBOL        SCLControl
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2017  23:37:49  PAGE 6
+
+
+  D:004FH         SYMBOL        SDAControl
+  C:04D5H         LINE#         115
+  C:04DBH         LINE#         116
+  C:04DBH         LINE#         117
+  C:04DBH         LINE#         118
+  C:04DEH         LINE#         119
+  C:04E4H         LINE#         120
+  C:04E7H         LINE#         121
+  C:04F2H         LINE#         122
+  -------         ENDPROC       _I2CSENDREADCONTINUESIGNAL
+  -------         PROC          _I2CSENDADDRESS
+  D:0007H         SYMBOL        Address
+  B:0020H.1       SYMBOL        IsRead
+  D:004DH         SYMBOL        SCLControl
+  D:0050H         SYMBOL        SDAControl
+  D:0053H         SYMBOL        SDARead
+  C:04ABH         LINE#         125
+  C:04ABH         LINE#         129
+  C:04ABH         LINE#         130
+  C:04D4H         LINE#         131
+  -------         ENDPROC       _I2CSENDADDRESS
+  -------         PROC          _AT24C64_SDA_CONTROL
+  D:0007H         SYMBOL        Value
+  C:0003H         LINE#         136
+  C:0003H         LINE#         137
+  C:0003H         LINE#         138
+  C:0008H         LINE#         139
+  -------         ENDPROC       _AT24C64_SDA_CONTROL
+  -------         PROC          _AT24C64_SCL_CONTROL
+  D:0007H         SYMBOL        Value
+  C:0538H         LINE#         141
+  C:0538H         LINE#         142
+  C:0538H         LINE#         143
+  C:053DH         LINE#         144
+  -------         ENDPROC       _AT24C64_SCL_CONTROL
+  -------         PROC          AT24C64_SDA_READ
+  C:0549H         LINE#         146
+  C:0549H         LINE#         147
+  -------         ENDPROC       AT24C64_SDA_READ
+  -------         PROC          _AT24C64PAGEWRITE
+  D:0022H         SYMBOL        DeviceAddress
+  D:0023H         SYMBOL        DataAddress
+  D:0024H         SYMBOL        Data
+  D:0027H         SYMBOL        Size
+  -------         DO            
+  D:0029H         SYMBOL        status
+  D:002AH         SYMBOL        i
+  C:0226H         SYMBOL        AT24C64_Write_Exception
+  -------         ENDDO         
+  C:0148H         LINE#         154
+  C:0152H         LINE#         155
+  C:0152H         LINE#         159
+  C:0155H         LINE#         161
+  C:0167H         LINE#         163
+  C:018BH         LINE#         164
+  C:018EH         LINE#         165
+  C:0191H         LINE#         166
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2017  23:37:49  PAGE 7
+
+
+  C:0191H         LINE#         167
+  C:01B0H         LINE#         168
+  C:01B3H         LINE#         169
+  C:01B5H         LINE#         170
+  C:01B5H         LINE#         171
+  C:01D5H         LINE#         172
+  C:01D8H         LINE#         173
+  C:01DAH         LINE#         174
+  C:01DAH         LINE#         176
+  C:01EAH         LINE#         177
+  C:0217H         LINE#         178
+  C:021AH         LINE#         179
+  C:021CH         LINE#         180
+  C:0226H         LINE#         182
+  C:0226H         LINE#         183
+  C:0238H         LINE#         185
+  C:023AH         LINE#         186
+  -------         ENDPROC       _AT24C64PAGEWRITE
+  -------         PROC          _AT24C64WRITE
+  D:0007H         SYMBOL        DeviceAddress
+  D:0005H         SYMBOL        DataAddress
+  D:0021H         SYMBOL        Data
+  C:04F5H         LINE#         188
+  C:04F7H         LINE#         189
+  -------         ENDPROC       _AT24C64WRITE
+  -------         PROC          _AT24C64PAGEREAD
+  D:0042H         SYMBOL        DeviceAddress
+  D:0043H         SYMBOL        DataAddress
+  D:0044H         SYMBOL        Data
+  D:0047H         SYMBOL        Size
+  -------         DO            
+  D:0049H         SYMBOL        i
+  D:004BH         SYMBOL        status
+  C:0133H         SYMBOL        AT24C64_Page_Read_Exception
+  -------         ENDDO         
+  C:000EH         LINE#         191
+  C:0018H         LINE#         192
+  C:0018H         LINE#         196
+  C:001BH         LINE#         198
+  C:002DH         LINE#         199
+  C:0051H         LINE#         200
+  C:0051H         LINE#         201
+  C:0054H         LINE#         202
+  C:0054H         LINE#         203
+  C:0073H         LINE#         204
+  C:0075H         LINE#         205
+  C:0078H         LINE#         206
+  C:007BH         LINE#         207
+  C:007BH         LINE#         208
+  C:009BH         LINE#         209
+  C:009DH         LINE#         210
+  C:00A0H         LINE#         211
+  C:00A3H         LINE#         212
+  C:00A3H         LINE#         214
+  C:00B5H         LINE#         215
+  C:00D9H         LINE#         216
+  C:00DCH         LINE#         217
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2017  23:37:49  PAGE 8
+
+
+  C:00DEH         LINE#         218
+  C:00DEH         LINE#         220
+  C:00E3H         LINE#         221
+  C:00E3H         LINE#         222
+  C:00E3H         LINE#         223
+  C:010EH         LINE#         224
+  C:0116H         LINE#         225
+  C:011FH         LINE#         226
+  C:0131H         LINE#         227
+  C:0133H         LINE#         229
+  C:0133H         LINE#         230
+  C:0145H         LINE#         232
+  C:0147H         LINE#         233
+  -------         ENDPROC       _AT24C64PAGEREAD
+  -------         PROC          _AT24C64READ
+  D:0007H         SYMBOL        DeviceAddress
+  D:0005H         SYMBOL        DataAddress
+  D:0001H         SYMBOL        Data
+  C:052EH         LINE#         235
+  C:052EH         LINE#         236
+  -------         ENDPROC       _AT24C64READ
+  -------         PROC          INIT
+  -------         DO            
+  D:0041H         SYMBOL        _data
+  -------         ENDDO         
+  C:040CH         LINE#         246
+  C:040CH         LINE#         247
+  C:040CH         LINE#         250
+  C:041CH         LINE#         251
+  C:0420H         LINE#         253
+  C:0422H         LINE#         255
+  C:042BH         LINE#         256
+  C:0433H         LINE#         262
+  C:0438H         LINE#         264
+  C:043BH         LINE#         265
+  C:043EH         LINE#         266
+  C:0441H         LINE#         267
+  C:0443H         LINE#         268
+  C:0445H         LINE#         270
+  C:0447H         LINE#         271
+  C:0449H         LINE#         272
+  -------         ENDPROC       INIT
+  -------         PROC          TIMER_0_INTERRUPT
+  C:023BH         LINE#         274
+  C:0258H         LINE#         276
+  C:025BH         LINE#         277
+  C:025EH         LINE#         279
+  C:0263H         LINE#         280
+  C:0263H         LINE#         281
+  C:0266H         LINE#         282
+  C:0268H         LINE#         283
+  C:026AH         LINE#         285
+  C:026AH         LINE#         286
+  C:026DH         LINE#         287
+  C:0275H         LINE#         288
+  C:0275H         LINE#         290
+  C:027DH         LINE#         291
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2017  23:37:49  PAGE 9
+
+
+  C:0286H         LINE#         292
+  C:0286H         LINE#         293
+  C:028CH         LINE#         295
+  C:028EH         LINE#         296
+  C:0295H         LINE#         297
+  C:0295H         LINE#         298
+  C:0297H         LINE#         299
+  C:029AH         LINE#         300
+  C:029AH         LINE#         301
+  C:02A1H         LINE#         302
+  C:02A4H         LINE#         304
+  C:02B7H         LINE#         305
+  C:02BBH         LINE#         307
+  C:02BDH         LINE#         308
+  C:02BDH         LINE#         309
+  -------         ENDPROC       TIMER_0_INTERRUPT
+  -------         PROC          MAIN
+  C:053EH         LINE#         311
+  C:053EH         LINE#         312
+  C:053EH         LINE#         313
+  C:0541H         LINE#         344
+  C:0541H         LINE#         345
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        I2C_AT24C64
+
+  -------         MODULE        ?C?CLDOPTR
+  C:03B7H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTOPTR
+  C:03E4H         PUBLIC        ?C?CSTOPTR
+  -------         ENDMOD        ?C?CSTOPTR
+
+  -------         MODULE        ?C?ICALL
+  C:0406H         PUBLIC        ?C?ICALL
+  C:040AH         PUBLIC        ?C?ICALL2
+  -------         ENDMOD        ?C?ICALL
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_I2CSTART?I2C_AT24C64
+    CALLER1: ?PR?TIMER_0_INTERRUPT?I2C_AT24C64
+    CALLER2: ?C_C51STARTUP
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_I2CSENDADDRESS?I2C_AT24C64
+    CALLER1: ?PR?TIMER_0_INTERRUPT?I2C_AT24C64
+    CALLER2: ?C_C51STARTUP
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_I2CWRITE?I2C_AT24C64
+    CALLER1: ?PR?TIMER_0_INTERRUPT?I2C_AT24C64
+    CALLER2: ?C_C51STARTUP
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_I2CSTOP?I2C_AT24C64
+    CALLER1: ?PR?TIMER_0_INTERRUPT?I2C_AT24C64
+    CALLER2: ?C_C51STARTUP
+BL51 BANKED LINKER/LOCATER V6.22                                                      01/04/2017  23:37:49  PAGE 10
+
+
+
+Program Size: data=77.2 xdata=0 code=1354
+LINK/LOCATE RUN COMPLETE.  4 WARNING(S),  0 ERROR(S)

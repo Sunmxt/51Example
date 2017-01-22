@@ -1,0 +1,103 @@
+C51 COMPILER V9.00   FLASH                                                                 12/24/2016 22:49:08 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE FLASH
+OBJECT MODULE PLACED IN flash.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\Keil\C51\BIN\C51.EXE flash.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #define TIMER_MODE 2
+   4          
+   5          unsigned char flash;
+   6          unsigned int counter_ms;
+   7          unsigned char quarter_ms;
+   8          
+   9          void timer0_interrupt() interrupt 1
+  10          {
+  11   1        unsigned int excess;
+  12   1        
+  13   1        #if TIMER_MODE == 0
+                  TH0 = 0xE3;
+                  TL0 = 0x06;
+                  excess = 500;
+                #elif TIMER_MODE == 1
+                  TH0 = 0xFC;
+                  TL0 = 0x67;
+                  excess = 500;
+                #elif TIMER_MODE == 2
+  22   1          excess = 2000;
+  23   1        #elif TIMER_MODE == 3
+                  TL0 = 0x1A;
+                  excess = 2000;
+                #else
+                  #error #error unsupported timer mode.
+                #endif
+  29   1         
+  30   1        counter_ms++;
+  31   1        if(counter_ms > excess)
+  32   1        {
+  33   2          counter_ms = 0;
+  34   2          flash = ~flash;
+  35   2          P1 = flash;
+  36   2        }
+  37   1        
+  38   1      }
+  39          
+  40          void timer_init()
+  41          {
+  42   1        P1 = 0;
+  43   1        counter_ms = 0;
+  44   1        quarter_ms = 0;
+  45   1        flash = 0;
+  46   1        
+  47   1        #if TIMER_MODE == 0
+                  TMOD = 0x00;
+                  TH0 = 0xE3;
+                  TL0 = 0x06;
+                #elif TIMER_MODE == 1
+                  TMOD = 0x01;
+                  TH0 = 0xFC;
+                  TL0 = 0x67;
+                #elif TIMER_MODE == 2
+C51 COMPILER V9.00   FLASH                                                                 12/24/2016 22:49:08 PAGE 2   
+
+  56   1          TMOD = 0x02;
+  57   1          TH0 = 0x1A;
+  58   1          TL0 = 0x1A;
+  59   1        #elif TIMER_MODE == 3
+                  TMOD = 0x03;
+                  TL0 = 0x1A;
+                #else
+                  #error unsupported timer mode.
+                #endif
+  65   1        
+  66   1        ET0 = 1;
+  67   1        EA = 1;
+  68   1        
+  69   1        TF0 = 0;
+  70   1        TR0 = 1;
+  71   1      }
+  72          
+  73          void main()
+  74          {  
+  75   1        timer_init();
+  76   1        for(;;)
+  77   1          _nop_();
+  78   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     73    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
