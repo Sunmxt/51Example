@@ -68,8 +68,10 @@ void timer0_interrupt() interrupt 1
     TL0 = 0x67;
     
     //Digital Display
-    P2 = ~((uchar)1 << (3 - ((Counter >> 2) & 3)));
-    P0 = DisplayCode[Digital[(Counter >> 2) & 3]] ^ (DigitalDot[(Counter >> 2) & 3] << 7);
+    
+    P0 = 0xFF;
+    P2 = ~((uchar)1 << (3 - (Counter & 3)));
+    P0 = DisplayCode[Digital[Counter & 3]] ^ (DigitalDot[Counter & 3] << 7);
     
     Counter ++;
     
@@ -102,6 +104,8 @@ void main()
             update = 0;
             if(PCF8591OpenRead(PCF8591_ADDRESS, scl_write, sda_write, sda_read))
                 LED7 = 0;
+            else 
+                LED7 = 1;
             
             u1.ad_data = PCF8591Receive(scl_write ,sda_write, sda_read);
             PCF8591Close(scl_write, sda_write);
