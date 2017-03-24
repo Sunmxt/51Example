@@ -58,13 +58,23 @@ void button_process()
 {
     CheckButton(&ButtonContext1, button1_read, 1, 50, 255);
     if(ButtonContext1.status & BUTTON_CLICKED)
+    {
         PWMPin[0].high_width += 8;
+        PWMPin[1].high_width += 8;
+        PWMPin[2].high_width += 8;
+        PWMPin[3].high_width += 8;
+    }
     CLEAR_BUTTON_MESSAGE(ButtonContext1, BUTTON_MESSAGE_MASK);
     
     
     CheckButton(&ButtonContext2, button2_read, 1, 50, 255);
     if(ButtonContext2.status & BUTTON_CLICKED)
+    {
         PWMPin[0].high_width -= 8;
+        PWMPin[1].high_width -= 8;
+        PWMPin[2].high_width -= 8;
+        PWMPin[3].high_width -= 8;
+    }
     CLEAR_BUTTON_MESSAGE(ButtonContext2, BUTTON_MESSAGE_MASK);
 }
 
