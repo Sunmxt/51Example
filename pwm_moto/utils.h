@@ -42,6 +42,9 @@ typedef struct PWM_Pin_Context {
     uchar counter;
 }PWMPinContext;
 
-bit PWMControl(PWMPinContext *Context, uchar CounterForward);
-                    
+//bit PWMControl(PWMPinContext *Context, uchar CounterForward);
+#define PWMControl(PWMOutputPin, Counter, Increment, DutyRadio)             \
+            (Counter) += (Increment);                                       \
+            (PWMOutputPin) = (Counter) > (DutyRadio)
+            
 #endif

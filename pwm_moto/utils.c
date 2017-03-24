@@ -56,10 +56,11 @@ Check_Button_Clear_Return:
     return;
 }
 
+/*
 bit PWMControl(PWMPinContext *Context, uchar CounterForward)
 {
     Context -> counter += CounterForward;
     
     if( !(~Context -> high_width) ) return 1;
     return Context -> counter < Context -> high_width;
-}
+}*/
