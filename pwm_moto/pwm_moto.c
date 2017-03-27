@@ -1,6 +1,7 @@
 #include <reg52.h>
 #include <intrins.h>
 #include "utils.h"
+#include "at24c64.h"
   
 //LED Indicator
 sbit LED0 = P1^0;
@@ -42,6 +43,11 @@ ButtonContext ButtonContext1;
 #define THRUST_BIAS_3   0
 #define THRUST_BIAS_4   0
 
+#define LEFT_ONE        -20
+#define LEFT_TWO        -80
+#define RIGHT_ONE       20
+#define RIGHT_TWO       80
+
 uchar Thrust;           /*
                             Thrust
                          
@@ -56,6 +62,44 @@ int Turn;               /*
                             ------------------------+-------------------------> (Turn)
                                                     0
                             */
+                            
+                            
+typedef struct Initial_Arguments
+{
+    uchar thrust;
+    uchar thrust_bias[4];
+    
+    int left_one;
+    int left_two;
+    int right_one;
+    int right_two;
+}InitialArgument;
+InitialArgument init_args;
+
+
+//I2C Devices
+sbit SCL = P3^0;
+sbit SDA = P3^1;
+
+#define AT24C64_ADDRESS 0xA0
+
+bit sda_read()
+{return SDA;}
+
+void sda_control(uchar Value)
+{SDA = Value;}
+
+void scl_control(uchar Value)
+{SCL = Value;}
+
+//Detectors
+sbit DETECTOR1 = P0^0;
+sbit DETECTOR2 = P0^1;
+sbit DETECTOR3 = P0^2;
+sbit DETECTOR4 = P0^3;
+
+
+//Buttons
                             
 bit button1_read(void)
 {
@@ -111,6 +155,11 @@ void timer0_process() interrupt 1
 
 void init()
 {
+    //Load configure
+    if(SUCCEED == AT24C64PageRead(AT24C64_ADDRESS, 0, &init_args, sizeof(InitialArgument)
+                    , scl_control, sda_control, sda_read))
+        LED7 = 0;
+                    
     //PWM Initialize
     PWM0 = 0;
     PWM1 = 0;
@@ -132,13 +181,19 @@ void init()
     
     TMOD = 0x01;
 
-    TH0 = 0xEE;                 //Timer1 for button checking
+    TH0 = 0xEE;                 //Timer0 for button checking
     TL0 = 0x00;                 
     
+    TH1 = 0xEE;                 //Timer1 for control
+    TL1 = 0x00;
+    
     TR0 = 1;
+    TR1 = 1;
     
     //Interrupt
     ET0 = 1;
+    ET1 = 1;
+    
     EA = 1;
 }
 
@@ -154,7 +209,7 @@ void main()
         PWMDutyRatio[2] = Thrust - Turn + THRUST_BIAS_3;
         PWMDutyRatio[3] = Thrust - Turn + THRUST_BIAS_4;
         
-        PWMControl(PWM0, PWMCounter[0], 1, PWMDutyRatio[0]);
+        PWMControl(PWM0, PWMCounter[0], 1, PWMDutyRatio[0]);        
         PWMControl(PWM1, PWMCounter[1], 1, PWMDutyRatio[1]);
         PWMControl(PWM2, PWMCounter[2], 1, PWMDutyRatio[2]);
         PWMControl(PWM3, PWMCounter[3], 1, PWMDutyRatio[3]);
