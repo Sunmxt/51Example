@@ -361,6 +361,11 @@
               <FileType>1</FileType>
               <FilePath>.\i2c.c</FilePath>
             </File>
+            <File>
+              <FileName>at24c64.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\at24c64.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

@@ -4,8 +4,19 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 F:\51project\pwm_moto\pwm_moto.uvproj
-Project File Date:  03/28/2017
+Project File Date:  03/30/2017
 
 <h2>Output:</h2>
+Build target 'Target 1'
+compiling pwm_moto.c...
+compiling utils.c...
+compiling i2c.c...
+compiling at24c64.c...
+linking...
+Program Size: data=91.2 xdata=0 const=0 code=1805
+creating hex file from "pwm_moto"...
+"pwm_moto" - 0 Error(s), 0 Warning(s).
+Clean started: Project: 'pwm_moto'
+   deleting intermediate output files for target 'Target 1'
 Clean started: Project: 'pwm_moto'
    deleting intermediate output files for target 'Target 1'
