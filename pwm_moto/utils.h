@@ -28,6 +28,40 @@ typedef struct Button_Context {
         (ButtonContext).status = ((ButtonContext).status & (~BUTTON_DETECT_MASK)) | Status
 }ButtonContext;
 
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+
+/*
+//Implement of button scaning with Preprocessor Meta
+#define DETECT_BITS_LENGTH          2           //Basic status bit length definition
+#define MESSAGE_BITS_LENGTH         2
+#define STATUS_VARIABLE_BIT_LENGTH  DETECT_BITS_LENGTH + MESSAGE_BITS_LENGTH
+
+#define BUTTON_NONE                 0           //Detect status code
+#define BUTTON_DETECTED             1
+#define BUTTON_DOWN                 2
+#define BUTTON_LONG_PUSH            3
+
+#define BUTTON_DETECTED             4           //Clicked
+#define BUTTON_LONG_DOWN            8           //Continuous Down (only set one)
+
+//Masks
+#define DETECT_STATUS_MASK(BitStartPosition)\
+        (~((~((-1) << BitStartPosition)) | ((-1) << (BitStartPosition + DETECT_BITS_LENGTH))))
+#define MESSAGE_MASK(BitStartPosition)\
+        (~((~((-1) << (BitStartPosition + DETECT_BITS_LENGTH))) | ((-1) << (BitStartPosition + STATUS_VARIABLE_BIT_LENGTH))))
+#define STATUS_MASK(BitStartPosition)\
+        (~((-1) << BitStartPosition)) | (~((-1) << (BitStartPosition + STATUS_VARIABLE_BIT_LENGTH))
+        
+
+#define SCAN_BUTTON(Pin, Counter, CounterIncrement, StatusVariable, BitStartPosition, DownTime \
+                    , LongDownTime) \
+    switch((StatusVariable) & (((-1) << (BitStartPosition + STATUS_VARIABLE_BIT_LENGTH)) | ~((-1) << BitStartPosition)))
+*/       
+
+                    
+    
+
 
 void CheckButton(ButtonContext *Context ,ReadButtonStatus Read, uchar CounterForward, uchar DownTime
                     , uchar LongDownTime);
