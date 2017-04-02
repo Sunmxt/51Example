@@ -5,8 +5,8 @@
 uchar AT24C64PageWrite(uchar DeviceAddress, ushort DataAddress, void *Data, uint Size
                         ,PinControl SCL, PinControl SDA, PinRead SDARead)
 { 
-  uchar status;
-  uint i; 
+  WISE_XDATA uchar status;
+  register uint i; 
   
   status = SUCCEED;
   
@@ -40,8 +40,8 @@ AT24C64_Write_Exception:
 uchar AT24C64PageRead(uchar DeviceAddress, ushort DataAddress, void *Data, uint Size
                         ,PinControl SCL, PinControl SDA, PinRead SDARead)
 {
-  uint i;
-  uchar status;
+  register uint i;
+  WISE_XDATA uchar status;
   
   status = SUCCEED;
   

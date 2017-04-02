@@ -6,6 +6,16 @@ void CheckButton(ButtonContext *Context ,ReadButtonStatus Read, uchar CounterFor
     bit status;
     
     status = Read();
+    SCAN_BUTTON(status, Context -> counter, CounterForward, Context -> status, 0, DownTime ,LongDownTime);
+} 
+
+/*
+void CheckButton(ButtonContext *Context ,ReadButtonStatus Read, uchar CounterForward, uchar DownTime
+                    , uchar LongDownTime)
+{
+    bit status;
+    
+    status = Read();
     
     
     switch(Context -> status & BUTTON_DETECT_MASK)
@@ -54,7 +64,7 @@ Check_Button_Clear_Return:
     Context -> status = 0;
     Context -> counter = 0;
     return;
-}
+}*/
 
 /*
 bit PWMControl(PWMPinContext *Context, uchar CounterForward)

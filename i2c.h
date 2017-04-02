@@ -8,8 +8,7 @@
 
 
 #include <intrins.h>
-
-typedef unsigned char uchar;
+#include "types.h"
 
 /*
 
@@ -36,20 +35,23 @@ Usage:
     
 */
 
+typedef void (*PinControl)(uchar value);
+typedef bit (*PinRead)();
+
 bit I2CSendAddress(uchar Address, bit IsRead
-                , void (*SCLControl)(uchar value)
-                , void (*SDAControl)(uchar value)
-                , bit (*SDARead)());
+                , PinControl SCLControl
+                , PinControl SDAControl
+                , PinRead SDARead);
 
-bit I2CWrite(uchar Data, void (*SCLControl)(uchar value)
-                , void (*SDAControl)(uchar value)
-                , bit (*SDARead)());                
+bit I2CWrite(uchar Data, PinControl SCLControl
+                , PinControl SDAControl
+                , PinRead SDARead);                
 
-void I2CStart(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value));
-void I2CStop(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value));
-uchar I2CRead(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value), bit (*SDARead)());
+void I2CStart(PinControl SCLControl, PinControl SDAControl);
+void I2CStop(PinControl SCLControl, PinControl SDAControl);
+uchar I2CRead(PinControl SCLControl, PinControl SDAControl, PinRead SDARead);
 
-bit I2CTestAcknowledge(bit (*SDARead)());
-void I2CSendReadContinueSignal(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value));
+bit I2CTestAcknowledge(PinRead SDARead);
+void I2CSendReadContinueSignal(PinControl SCLControl, PinControl SDAControl);
 
 #endif

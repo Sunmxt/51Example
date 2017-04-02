@@ -5,7 +5,7 @@ void i2c_delay_5us()
   _nop_();
 }
 
-void I2CStart(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value))
+void I2CStart(PinControl SCLControl, PinControl SDAControl)
 {
   SCLControl(0);
   i2c_delay_5us();
@@ -20,7 +20,7 @@ void I2CStart(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value))
   i2c_delay_5us();
 }
 
-void I2CStop(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value))
+void I2CStop(PinControl SCLControl, PinControl SDAControl)
 {
   SCLControl(0);
   i2c_delay_5us();
@@ -35,16 +35,16 @@ void I2CStop(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value))
   i2c_delay_5us();
 }
 
-bit I2CTestAcknowledge(bit (*SDARead)())
+bit I2CTestAcknowledge(PinRead SDARead)
 {
   return !SDARead();
 }
 
-bit I2CWrite(uchar Data, void (*SCLControl)(uchar value)
-                , void (*SDAControl)(uchar value)
-                , bit (*SDARead)())
+bit I2CWrite(uchar Data, PinControl SCLControl
+                , PinControl SDAControl
+                , PinRead SDARead)
 {
-  uchar i;
+  register uchar i;
   
   for(i = 0 ; i < 8 ; i++)
   {
@@ -70,9 +70,9 @@ bit I2CWrite(uchar Data, void (*SCLControl)(uchar value)
   return I2CTestAcknowledge(SDARead);
 }
 
-uchar I2CRead(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value), bit (*SDARead)())
+uchar I2CRead(PinControl SCLControl, PinControl SDAControl, PinRead SDARead)
 {
-  uchar _data, i;
+  register uchar _data, i;
   
   _data = 0;
   SCLControl(0);
@@ -96,7 +96,7 @@ uchar I2CRead(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value), 
   return _data;
 }
 
-void I2CSendReadContinueSignal(void (*SCLControl)(uchar value), void (*SDAControl)(uchar value))
+void I2CSendReadContinueSignal(PinControl SCLControl, PinControl SDAControl)
 {
   SCLControl(0);
   i2c_delay_5us();
@@ -107,9 +107,9 @@ void I2CSendReadContinueSignal(void (*SCLControl)(uchar value), void (*SDAContro
 }
 
 bit I2CSendAddress(uchar Address, bit IsRead
-                , void (*SCLControl)(uchar value)
-                , void (*SDAControl)(uchar value)
-                , bit (*SDARead)())
+                , PinControl SCLControl
+                , PinControl SDAControl
+                , PinRead SDARead)
 {
   return I2CWrite((Address << 1) | IsRead, SCLControl, SDAControl, SDARead);
 }
